@@ -11,7 +11,6 @@ public class City {
     private int population;
     private int foundation;
 
-
     public static City createCityFromString(String str) {
         String[] strSplit = str.split(";");
         City city = new City();
