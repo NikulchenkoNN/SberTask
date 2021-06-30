@@ -8,10 +8,10 @@ public class Search {
     public static String searchByPopulation(List<City> cities) {
         int maxPopulation = 0;
         int index = 0;
-        for (int i =0; i < cities.size(); i++) {
-            if (cities.get(i).getPopulation() > maxPopulation) {
-                maxPopulation = cities.get(i).getPopulation();
-                index = cities.get(i).getId();
+        for (City city : cities) {
+            if (city.getPopulation() > maxPopulation) {
+                maxPopulation = city.getPopulation();
+                index = city.getId();
             }
         }
         return "[" + index + "]" + " = " + maxPopulation;

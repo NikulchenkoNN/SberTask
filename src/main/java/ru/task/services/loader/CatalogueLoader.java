@@ -6,13 +6,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class CatalogueLoader {
 
     public static List<City> readFromFileToList() throws FileNotFoundException {
         List<City> cities = new ArrayList<>();
-        File file = new File(CatalogueLoader.class.getClassLoader().getResource("Cities.txt").getFile());
+        File file = new File(Objects.requireNonNull(CatalogueLoader.class.getClassLoader().getResource("Cities.txt")).getFile());
         validateFile(file);
         try (Scanner scanner = new Scanner(new File(String.valueOf(file)))){
             while (scanner.hasNext()) {

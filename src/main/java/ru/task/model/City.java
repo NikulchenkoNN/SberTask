@@ -2,9 +2,6 @@ package ru.task.model;
 
 import lombok.Data;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-
 @Data
 public class City {
     private int id;
