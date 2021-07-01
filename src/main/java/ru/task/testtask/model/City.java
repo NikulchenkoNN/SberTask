@@ -1,4 +1,4 @@
-package ru.task.model;
+package ru.task.testtask.model;
 
 import lombok.Data;
 

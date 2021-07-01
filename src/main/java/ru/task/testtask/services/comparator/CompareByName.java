@@ -1,6 +1,6 @@
-package ru.task.services.comparator;
+package ru.task.testtask.services.comparator;
 
-import ru.task.model.City;
+import ru.task.testtask.model.City;
 
 import java.util.Comparator;
 

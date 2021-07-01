@@ -1,6 +1,6 @@
-package ru.task.services.searcher;
+package ru.task.testtask.services.searcher;
 
-import ru.task.model.City;
+import ru.task.testtask.model.City;
 
 import java.util.List;
 

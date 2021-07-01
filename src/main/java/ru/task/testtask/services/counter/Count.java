@@ -1,6 +1,6 @@
-package ru.task.services.counter;
+package ru.task.testtask.services.counter;
 
-import ru.task.model.City;
+import ru.task.testtask.model.City;
 
 import java.util.*;
 

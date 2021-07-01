@@ -1,31 +1,34 @@
-package ru.task.services.loader;
+package ru.task.testtask.services.loader;
 
 
 import org.junit.Assert;
 import org.junit.Test;
-import ru.task.services.comparator.CompareByName;
-import ru.task.services.comparator.CompareByRegion;
-import ru.task.services.counter.Count;
-import ru.task.model.City;
-import ru.task.services.searcher.Search;
+import ru.task.testtask.services.comparator.CompareByName;
+import ru.task.testtask.services.comparator.CompareByRegion;
+import ru.task.testtask.services.counter.Count;
+import ru.task.testtask.model.City;
+import ru.task.testtask.services.searcher.Search;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CatalogueTest {
-    private CatalogueLoader loader = new CatalogueLoader();
 
-    private List<City> cities = loader.readFromFileToList();
-    private List<City> citiesSorted = new ArrayList<>(cities);
+    private final List<City> cities = CatalogueLoader.readFromFileToList();
+    private final List<City> citiesSorted = new ArrayList<>(cities);
 
     public CatalogueTest() throws FileNotFoundException {
     }
 
     @Test
     public void whenLoadFromFileSizeCorrect() throws FileNotFoundException {
-        new CatalogueLoader();
         Assert.assertEquals(8, CatalogueLoader.readFromFileToList().size());
+    }
+
+    @Test
+    public void fileNotFound() {
+
     }
 
 
@@ -49,13 +52,12 @@ public class CatalogueTest {
 
     @Test
     public void searchByPopulation() {
-        String str = "[3] = 1150000";
+        String str = "[4] = 1150000";
         Assert.assertEquals(str, Search.searchByPopulation(cities));
     }
 
     @Test
     public void countCityInRegion() {
-        new Count();
         Assert.assertEquals(6, Count.countCityByRegions(cities).size());
     }
 }

@@ -1,11 +1,11 @@
-package ru.task;
+package ru.task.testtask;
 
-import ru.task.model.City;
-import ru.task.services.comparator.CompareByName;
-import ru.task.services.comparator.CompareByRegion;
-import ru.task.services.counter.Count;
-import ru.task.services.loader.CatalogueLoader;
-import ru.task.services.searcher.Search;
+import ru.task.testtask.model.City;
+import ru.task.testtask.services.comparator.CompareByName;
+import ru.task.testtask.services.comparator.CompareByRegion;
+import ru.task.testtask.services.counter.Count;
+import ru.task.testtask.services.loader.CatalogueLoader;
+import ru.task.testtask.services.searcher.Search;
 
 import java.io.FileNotFoundException;
 import java.util.List;
