@@ -6,4 +6,5 @@ import lombok.Data;
 public class Card {
     private int id;
     private String number;
+    private User user;
 }

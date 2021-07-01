@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="SberTask-master" />
         <module name="CityCatalogue" />
+        <module name="SberTask" />
       </profile>
     </annotationProcessing>
   </component>

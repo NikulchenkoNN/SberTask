@@ -5,9 +5,8 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class BankUser {
+public class User {
      private int id;
      private String name;
-     private String lastName;
      private List<Card> cards;
 }
