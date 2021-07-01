@@ -12,6 +12,7 @@ public class Application {
         HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
         server.setExecutor(null);
         server.createContext("/api/hello", new MyHttpHandler());
+        server.createContext("/api/bye", new MyHttpHandler());
         server.setExecutor(null);
         server.start();
 
