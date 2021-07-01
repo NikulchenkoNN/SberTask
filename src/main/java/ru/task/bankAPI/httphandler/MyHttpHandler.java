@@ -5,12 +5,11 @@ import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Arrays;
 
 
 public class MyHttpHandler implements HttpHandler {
     @Override
-    public void handle(HttpExchange exchange) throws IOException {
+    public void handle(HttpExchange exchange) {
         String request = null;
         if ("GET".equals(exchange.getRequestMethod())) {
             request = handleGetRequest(exchange);
