@@ -20,7 +20,6 @@ public class MyHttpHandler implements HttpHandler {
     }
 
 
-
     private String handlePostRequest(HttpExchange exchange) {
         return exchange.getRequestURI().toString();
     }
@@ -31,13 +30,13 @@ public class MyHttpHandler implements HttpHandler {
 
     private void handleResponse(HttpExchange exchange, String request) {
         try {
-            exchange.sendResponseHeaders(200, request.substring(request.lastIndexOf("/")+1).length());
+            exchange.sendResponseHeaders(200, request.substring(request.lastIndexOf("/") + 1).length());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         try (OutputStream os = exchange.getResponseBody()) {
-            os.write(request.substring(request.lastIndexOf("/")+1).getBytes());
+            os.write(request.substring(request.lastIndexOf("/") + 1).getBytes());
             os.flush();
         } catch (IOException e) {
             e.printStackTrace();

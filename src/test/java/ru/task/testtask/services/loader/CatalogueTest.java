@@ -3,10 +3,10 @@ package ru.task.testtask.services.loader;
 
 import org.junit.Assert;
 import org.junit.Test;
+import ru.task.testtask.model.City;
 import ru.task.testtask.services.comparator.CompareByName;
 import ru.task.testtask.services.comparator.CompareByRegion;
 import ru.task.testtask.services.counter.Count;
-import ru.task.testtask.model.City;
 import ru.task.testtask.services.searcher.Search;
 
 import java.io.FileNotFoundException;

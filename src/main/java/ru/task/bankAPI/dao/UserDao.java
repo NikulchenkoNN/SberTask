@@ -8,5 +8,6 @@ public interface UserDao {
     User findUserById(int userId);
     User findUserByName(String name);
     User createUser(String name, String lastName);
-    Set<User> getUser();
+    Set<User> getUsers();
+    double getBalanceCard(User user, String cardNumber);
 }

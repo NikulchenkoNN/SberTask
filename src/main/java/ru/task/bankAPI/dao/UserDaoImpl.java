@@ -39,26 +39,6 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
-    private User resultSetForUser(ResultSet resultSet) throws SQLException {
-        User user = new User();
-        user.setId(resultSet.getInt(1));
-        user.setName(resultSet.getString(2));
-        try {
-            int cardId = resultSet.getInt(3);
-            if (cardId != 0) {
-                String cardNumber = resultSet.getString(4);
-                Card card = new Card();
-                card.setId(cardId);
-                card.setNumber(cardNumber);
-                card.setUser(user);
-                user.getCards().add(card);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return user;
-    }
-
     @Override
     public User createUser(String name, String lastName) {
         try (PreparedStatement statement = DataSourceHelper.createConnection().prepareStatement("insert into user (name) value (?)")) {
@@ -71,7 +51,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Set<User> getUser() {
+    public Set<User> getUsers() {
         try (PreparedStatement statement = DataSourceHelper.createConnection().prepareStatement("select * from user u left join card c on u.id=c.user_id")) {
             ResultSet resultSet = statement.getResultSet();
             Set<User> users = new HashSet<>();
@@ -89,5 +69,32 @@ public class UserDaoImpl implements UserDao {
         } catch (SQLException e) {
             throw new RuntimeException();
         }
+    }
+
+    @Override
+    public double getBalanceCard(User user, String cardNumber) {
+        return 0;
+    }
+
+    private User resultSetForUser(ResultSet resultSet) throws SQLException {
+        User user = new User();
+        user.setId(resultSet.getInt(1));
+        user.setName(resultSet.getString(2));
+        try {
+            int cardId = resultSet.getInt(3);
+            if (cardId != 0) {
+                String cardNumber = resultSet.getString(4);
+                double cardBalance = resultSet.getDouble(5);
+                Card card = new Card();
+                card.setId(cardId);
+                card.setNumber(cardNumber);
+                card.setUser(user);
+                card.setBalance(cardBalance);
+                user.getCards().add(card);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 }

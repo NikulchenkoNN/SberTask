@@ -1,12 +1,27 @@
 package ru.task.bankAPI.model;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
-@Data
+@JsonAutoDetect
 public class User {
+     @Getter @Setter
      private int id;
+     @Getter @Setter
      private String name;
+     @Getter @Setter
      private List<Card> cards;
+
+     @Override
+     public String toString() {
+          return "User{" + "\n" +
+                  "id=" + id + ",\n" +
+                  "name='" + name + '\'' + ",\n" +
+                  "cards=" + cards + ",\n" +
+                  '}';
+     }
+
 }

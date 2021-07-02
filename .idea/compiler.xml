@@ -8,8 +8,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="SberTask-master" />
-        <module name="CityCatalogue" />
         <module name="SberTask" />
+        <module name="CityDirectory" />
+        <module name="CityCatalogue" />
       </profile>
     </annotationProcessing>
   </component>
