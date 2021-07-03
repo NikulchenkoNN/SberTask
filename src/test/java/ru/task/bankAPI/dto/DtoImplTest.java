@@ -24,6 +24,6 @@ public class DtoImplTest {
         user.setId(1);
         user.setName("Nick");
         user.setCards(cards);
-        System.out.println(new DtoImpl().fromDbToString(user));
+        System.out.println(new DtoImpl().fromJSONToString(user));
     }
 }

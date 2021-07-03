@@ -40,7 +40,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User createUser(String name, String lastName) {
+    public User createUser(String name) {
         try (PreparedStatement statement = DataSourceHelper.createConnection().prepareStatement("insert into user (name) value (?)")) {
             statement.setString(1, name);
             statement.execute();
@@ -73,6 +73,11 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public double getBalanceCard(User user, String cardNumber) {
+        try (PreparedStatement statement = DataSourceHelper.createConnection().prepareStatement("select * from card where number = ? and bank_user_id = ?")) {
+
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
         return 0;
     }
 

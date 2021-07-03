@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 
 public class DtoImpl implements Dto {
-    public String fromDbToString(Object o) throws IOException {
+    public String fromJSONToString(Object o) throws IOException {
         StringWriter writer = new StringWriter();
         ObjectMapper mapper = new ObjectMapper();
         mapper.writeValue(writer, o);
