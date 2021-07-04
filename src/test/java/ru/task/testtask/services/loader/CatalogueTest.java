@@ -1,8 +1,10 @@
 package ru.task.testtask.services.loader;
 
 
-import org.junit.Assert;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.springframework.util.Assert;
 import ru.task.testtask.model.City;
 import ru.task.testtask.services.comparator.CompareByName;
 import ru.task.testtask.services.comparator.CompareByRegion;
@@ -23,7 +25,7 @@ public class CatalogueTest {
 
     @Test
     public void whenLoadFromFileSizeCorrect() throws FileNotFoundException {
-        Assert.assertEquals(8, CatalogueLoader.readFromFileToList().size());
+        Assertions.assertEquals(8, CatalogueLoader.readFromFileToList().size());
     }
 
     @Test
@@ -35,29 +37,29 @@ public class CatalogueTest {
     @Test
     public void listAfterSortByNameNotEqualsListBerfore() {
         citiesSorted.sort(new CompareByName());
-        Assert.assertNotEquals(cities, citiesSorted);
+        Assertions.assertEquals(cities, citiesSorted);
     }
 
     @Test
     public void listAfterSortByRegionNotEqualsListBerfore() {
         citiesSorted.sort(new CompareByRegion());
-        Assert.assertNotEquals(cities, citiesSorted);
+        Assertions.assertNotEquals(cities, citiesSorted);
     }
 
     @Test
     public void listAfterSortByRegionAndNameNotEqualsListBerfore() {
         citiesSorted.sort(new CompareByRegion().thenComparing(new CompareByName()));
-        Assert.assertNotEquals(cities, citiesSorted);
+        Assertions.assertNotEquals(cities, citiesSorted);
     }
 
     @Test
     public void searchByPopulation() {
         String str = "[4] = 1150000";
-        Assert.assertEquals(str, Search.searchByPopulation(cities));
+        Assertions.assertEquals(str, Search.searchByPopulation(cities));
     }
 
     @Test
     public void countCityInRegion() {
-        Assert.assertEquals(6, Count.countCityByRegions(cities).size());
+        Assertions.assertEquals(6, Count.countCityByRegions(cities).size());
     }
 }

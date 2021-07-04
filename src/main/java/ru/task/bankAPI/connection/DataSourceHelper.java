@@ -12,7 +12,7 @@ import java.sql.SQLException;
 
 public class DataSourceHelper {
 
-    public void createDB(Connection connection) {
+    public static void createDB() {
         String sql = null;
         try {
             sql = FileUtils.readFileToString(new File(DataSourceHelper.class.getResource("/database.sql").getFile()), Charset.defaultCharset());

@@ -1,6 +1,5 @@
 package ru.task.bankAPI.dto;
 
-import org.junit.Test;
 import ru.task.bankAPI.model.Card;
 import ru.task.bankAPI.model.User;
 
@@ -10,8 +9,6 @@ import java.util.List;
 
 public class DtoImplTest {
 
-
-    @Test
     public void fromDbToString() throws IOException {
         User user = new User();
         Card card = new Card();

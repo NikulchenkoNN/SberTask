@@ -6,8 +6,7 @@ import java.util.Set;
 
 public interface UserDao {
     User findUserById(int userId);
-    User findUserByName(String name);
-    User createUser(String name);
+    User findUserByName(String userName);
+    User createUser(String userName);
     Set<User> getUsers();
-    double getBalanceCard(User user, String cardNumber);
 }
