@@ -17,11 +17,10 @@ public class User {
 
      @Override
      public String toString() {
-          return "User{" + "\n" +
-                  "id=" + id + ",\n" +
-                  "name='" + name + '\'' + ",\n" +
-                  "cards=" + cards + ",\n" +
+          return "User{" +
+                  "id=" + id +
+                  ", name='" + name + '\'' +
+                  ", cards=" + cards +
                   '}';
      }
-
 }

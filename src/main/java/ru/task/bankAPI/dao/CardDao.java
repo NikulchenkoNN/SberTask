@@ -7,7 +7,6 @@ import java.util.Set;
 public interface CardDao {
     Card createCard(String number);
     Set<Card> getCardsByUser(String userName);
-    double getBalanceCard(String userName, String cardNumber);
-    void updateBalance(String userName, String cardNumber, int cash);
-
+    double getBalanceCard(int userID, String cardNumber);
+    void updateBalance(int userID, String cardNumber, int cash);
 }

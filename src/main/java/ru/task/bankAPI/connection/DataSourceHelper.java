@@ -12,24 +12,31 @@ import java.sql.SQLException;
 
 public class DataSourceHelper {
 
-    public static void createDB() {
-        String sql = null;
-        try {
-            sql = FileUtils.readFileToString(new File(DataSourceHelper.class.getResource("/database.sql").getFile()), Charset.defaultCharset());
-        } catch (IOException e) {
-            e.printStackTrace();
+        public static Connection connection() throws SQLException {
+            try {
+                Class.forName("org.h2.Driver");
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            final Connection connection = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/test", "sa", "");
+            connection.setAutoCommit(true);
+            return connection;
         }
 
-        try (PreparedStatement statement = DataSourceHelper.createConnection().prepareStatement(sql)) {
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+        public static void createDb() {
+            String sql;
+            try {
+                sql = FileUtils.readFileToString(new File(
+                                DataSourceHelper.class.getResource("/database.sql").getFile()),
+                        Charset.defaultCharset() );
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
-    public static Connection createConnection() throws SQLException {
-        final Connection connection = DriverManager.getConnection("jdbc:h2:mem:default", "sa", "");
-        connection.setAutoCommit(true);
-        return connection;
-    }
+            try (PreparedStatement statement = DataSourceHelper.connection().prepareStatement(sql)) {
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
 }

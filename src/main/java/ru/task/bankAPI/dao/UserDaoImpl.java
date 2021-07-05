@@ -15,8 +15,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User findUserById(int userId) {
-        try (PreparedStatement statement = DataSourceHelper.createConnection()
-                .prepareStatement("select * from user u where u.id=?")) {
+        try (PreparedStatement statement = DataSourceHelper.connection()
+                .prepareStatement("select * from user u where u.=?")) {
             statement.setInt(1, userId);
             statement.execute();
             ResultSet resultSet = statement.getResultSet();
@@ -28,8 +28,20 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public User createUser(String userName) {
+        try (PreparedStatement statement = DataSourceHelper.connection()
+                .prepareStatement("insert into user (name) values (?)")) {
+            statement.setString(1, userName);
+            statement.execute();
+            return findUserByName(userName);
+        } catch (SQLException e) {
+            throw new RuntimeException("Create user failure");
+        }
+    }
+
+    @Override
     public User findUserByName(String userName) {
-        try (PreparedStatement statement = DataSourceHelper.createConnection()
+        try (PreparedStatement statement = DataSourceHelper.connection()
                 .prepareStatement("select * from user u where u.name=?")) {
             statement.setString(1, userName);
             statement.execute();
@@ -37,26 +49,14 @@ public class UserDaoImpl implements UserDao {
             resultSet.next();
             return resultSetForUser(resultSet);
         } catch (SQLException e) {
-            throw new RuntimeException();
-        }
-    }
-
-    @Override
-    public User createUser(String userName) {
-        try (PreparedStatement statement = DataSourceHelper.createConnection()
-                .prepareStatement("insert into user (name) value (?)")) {
-            statement.setString(1, userName);
-            statement.execute();
-            return findUserByName(userName);
-        } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new RuntimeException("tuta");
         }
     }
 
     @Override
     public Set<User> getUsers() {
-        try (PreparedStatement statement = DataSourceHelper.createConnection()
-                .prepareStatement("select * from user u left join card c on u.id=c.user_id")) {
+        try (PreparedStatement statement = DataSourceHelper.connection()
+                .prepareStatement("select * from user u left join card c on u.id=c.BANK_USER_ID")) {
             ResultSet resultSet = statement.getResultSet();
             Set<User> users = new HashSet<>();
             while (resultSet.next()) {
@@ -77,22 +77,19 @@ public class UserDaoImpl implements UserDao {
 
     private User resultSetForUser(ResultSet resultSet) throws SQLException {
         User user = new User();
-        user.setId(resultSet.getInt(1));
-        user.setName(resultSet.getString(2));
+        user.setId(resultSet.getInt("ID"));
+        user.setName(resultSet.getString("NAME"));
         try {
-            int cardId = resultSet.getInt(3);
+            int cardId = resultSet.getInt("CARD_ID");
             if (cardId != 0) {
-                String cardNumber = resultSet.getString(4);
-                double cardBalance = resultSet.getDouble(5);
+                String cardNumber = resultSet.getString("NUMBER");
                 Card card = new Card();
                 card.setId(cardId);
                 card.setNumber(cardNumber);
                 card.setUser(user);
-                card.setBalance(cardBalance);
                 user.getCards().add(card);
             }
         } catch (Exception e) {
-            e.printStackTrace();
         }
         return user;
     }

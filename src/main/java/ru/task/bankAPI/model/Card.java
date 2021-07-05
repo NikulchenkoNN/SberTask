@@ -19,10 +19,11 @@ public class Card {
 
     @Override
     public String toString() {
-        return "Card{" + "\n" +
-                "id=" + id +",\n" +
-                "umber='" + number + '\'' +",\n" +
-                "balance=" + balance +"\n" +
+        return "Card{" +
+                "id=" + id +
+                ", number='" + number + '\'' +
+                ", balance=" + balance +
+                ", user=" + user +
                 '}';
     }
 }

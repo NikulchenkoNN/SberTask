@@ -31,7 +31,6 @@ public class CardNumber {
             }
         }
         return takeCardNumber();
-
     }
 
     private void generateNumber(StringBuilder result) {
