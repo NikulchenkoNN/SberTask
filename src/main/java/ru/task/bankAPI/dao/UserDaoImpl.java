@@ -14,14 +14,14 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User findUserById(int userId) {
         try (PreparedStatement statement = DataSourceHelper.connection()
-                .prepareStatement("select * from user u where u.=?")) {
+                .prepareStatement("select * from user u where u.ID= ?")) {
             statement.setInt(1, userId);
             statement.execute();
             ResultSet resultSet = statement.getResultSet();
             resultSet.next();
             return resultSetForUser(resultSet);
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new RuntimeException("Search by ID failure");
         }
     }
 

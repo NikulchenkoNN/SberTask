@@ -2,6 +2,7 @@ package ru.task.bankAPI.dao;
 
 import ru.task.bankAPI.connection.DataSourceHelper;
 import ru.task.bankAPI.model.Card;
+import ru.task.bankAPI.model.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -60,24 +61,26 @@ public class CardDaoImpl implements CardDao {
     }
 
     @Override
-    public void updateBalance(int userID, String cardNumber, int cash) {
-        double balanceCard = getBalanceCard(userID, cardNumber);
+    public void updateBalance(User user, String cardNumber, double cash) {
+        double balanceCard = getBalanceCard(user, cardNumber);
         double newCash = balanceCard + cash;
         try (PreparedStatement statement = DataSourceHelper.connection()
                 .prepareStatement("update card set balance = ? where number = ?")) {
             statement.setDouble(1, newCash);
             statement.setString(2, cardNumber);
             statement.execute();
+            ResultSet resultSet = statement.getResultSet();
+            resultSetForCard(resultSet).setBalance(newCash);
         } catch (SQLException e) {
             throw new RuntimeException();
         }
     }
 
     @Override
-    public double getBalanceCard(int userID, String cardNumber) {
+    public double getBalanceCard(User user, String cardNumber) {
         try (PreparedStatement statement = DataSourceHelper.connection()
                 .prepareStatement("select * from card c inner join (select * from user where id = ?) u on u.id = c.bank_user_id where c.number = ?")) {
-            statement.setInt(1, userID);
+            statement.setInt(1, user.getId());
             statement.setString(2, cardNumber);
             statement.execute();
             ResultSet resultSet = statement.getResultSet();

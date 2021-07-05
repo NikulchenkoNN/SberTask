@@ -61,7 +61,11 @@ public class StatementsTest {
 //        addCardToUser(user3, card4);
 //        addCardToUser(user2, card5);
 
-        System.out.println(cardDao.getBalanceCard(1, card1.getNumber()));
+        System.out.println(cardDao.getBalanceCard(user1, card1.getNumber()));
+
+        cardDao.updateBalance(user1, card1.getNumber(), 15.12);
+
+        System.out.println(cardDao.getBalanceCard(user1, card1.getNumber()));
 
         List<User> userSet = new ArrayList<>();
         userSet.add(user1);
