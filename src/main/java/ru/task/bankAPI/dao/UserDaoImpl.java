@@ -7,9 +7,7 @@ import ru.task.bankAPI.model.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 public class UserDaoImpl implements UserDao {
 
@@ -77,6 +75,7 @@ public class UserDaoImpl implements UserDao {
 
     private User resultSetForUser(ResultSet resultSet) throws SQLException {
         User user = new User();
+        user.setCards(new ArrayList<>());
         user.setId(resultSet.getInt("ID"));
         user.setName(resultSet.getString("NAME"));
         try {

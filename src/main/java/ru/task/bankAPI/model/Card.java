@@ -23,7 +23,7 @@ public class Card {
                 "id=" + id +
                 ", number='" + number + '\'' +
                 ", balance=" + balance +
-                ", user=" + user +
+                (user != null ? ", user={id:" + user.getId() + "}" : "") +
                 '}';
     }
 }

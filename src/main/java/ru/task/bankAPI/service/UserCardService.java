@@ -13,6 +13,8 @@ public class UserCardService {
                 .prepareStatement("update CARD set BANK_USER_ID = ? where ID = ?")) {
             statement.setInt(1, user.getId());
             statement.setInt(2, card.getId());
+            user.addCard(card);
+            card.setUser(user);
             statement.execute();
         } catch (SQLException e) {
             throw new RuntimeException();

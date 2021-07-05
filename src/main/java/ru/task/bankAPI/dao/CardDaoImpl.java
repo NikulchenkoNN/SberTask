@@ -81,6 +81,7 @@ public class CardDaoImpl implements CardDao {
             statement.setString(2, cardNumber);
             statement.execute();
             ResultSet resultSet = statement.getResultSet();
+            resultSet.next();
             return resultSetForCard(resultSet).getBalance();
         } catch (SQLException e) {
             throw new RuntimeException();

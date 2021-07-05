@@ -15,12 +15,16 @@ public class User {
      @Getter @Setter
      private List<Card> cards;
 
+     public void addCard(Card card) {
+          cards.add(card);
+     }
+
      @Override
      public String toString() {
           return "User{" +
                   "id=" + id +
                   ", name='" + name + '\'' +
-                  ", cards=" + cards +
+                  (!cards.isEmpty() ? ", cards =" + cards : "") +
                   '}';
      }
 }
