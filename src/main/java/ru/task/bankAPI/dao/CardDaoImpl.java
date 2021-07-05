@@ -23,14 +23,13 @@ public class CardDaoImpl implements CardDao {
                 .prepareStatement("insert into card (number) values (?)")) {
             statement.setString(1, number);
             statement.execute();
-
-            return findCard(number);
+            return findCardByNumber(number);
         } catch (SQLException e) {
             throw new RuntimeException("Create card failure");
         }
     }
 
-    private Card findCard(String number) {
+    private Card findCardByNumber(String number) {
         try (PreparedStatement statement = DataSourceHelper.connection()
                 .prepareStatement("select * from card c where c.number = ?")) {
             statement.setString(1, number);
@@ -61,26 +60,25 @@ public class CardDaoImpl implements CardDao {
     }
 
     @Override
-    public void updateBalance(User user, String cardNumber, double cash) {
-        double balanceCard = getBalanceCard(user, cardNumber);
-        double newCash = balanceCard + cash;
+    public void updateCardBalance(String user, String cardNumber, double cash) {
+        double oldBalance = getBalanceCard(userDao.findUserByName(user).getName(), cardNumber);
+        double newBalance = oldBalance + cash;
         try (PreparedStatement statement = DataSourceHelper.connection()
                 .prepareStatement("update card set balance = ? where number = ?")) {
-            statement.setDouble(1, newCash);
+            statement.setDouble(1, newBalance);
             statement.setString(2, cardNumber);
             statement.execute();
-            ResultSet resultSet = statement.getResultSet();
-            resultSetForCard(resultSet).setBalance(newCash);
+
         } catch (SQLException e) {
             throw new RuntimeException();
         }
     }
 
     @Override
-    public double getBalanceCard(User user, String cardNumber) {
+    public double getBalanceCard(String user, String cardNumber) {
         try (PreparedStatement statement = DataSourceHelper.connection()
                 .prepareStatement("select * from card c inner join (select * from user where id = ?) u on u.id = c.bank_user_id where c.number = ?")) {
-            statement.setInt(1, user.getId());
+            statement.setInt(1, userDao.findUserByName(user).getId());
             statement.setString(2, cardNumber);
             statement.execute();
             ResultSet resultSet = statement.getResultSet();

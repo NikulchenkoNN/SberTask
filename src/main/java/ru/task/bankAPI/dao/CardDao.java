@@ -8,6 +8,6 @@ import java.util.Set;
 public interface CardDao {
     Card createCard(String number);
     Set<Card> getCardsByUser(String userName);
-    double getBalanceCard(User user, String cardNumber);
-    void updateBalance(User user, String cardNumber, double cash);
+    double getBalanceCard(String user, String cardNumber);
+    void updateCardBalance(String user, String cardNumber, double cash);
 }
