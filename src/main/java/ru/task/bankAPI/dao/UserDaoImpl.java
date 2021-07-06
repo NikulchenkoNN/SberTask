@@ -55,7 +55,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public Set<User> getUsers() {
         try (PreparedStatement statement = DataSourceHelper.connection()
-                .prepareStatement("select * from user")) {
+                .prepareStatement("select * from user u left join CARD c on u.ID=c.BANK_USER_ID")) {
             statement.execute();
             ResultSet resultSet = statement.getResultSet();
             Set<User> users = new HashSet<>();

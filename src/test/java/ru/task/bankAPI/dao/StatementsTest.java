@@ -2,6 +2,7 @@ package ru.task.bankAPI.dao;
 
 import org.h2.tools.Server;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.task.bankAPI.cardnumber.CardNumber;
 import ru.task.bankAPI.connection.DataSourceHelper;
@@ -10,6 +11,7 @@ import ru.task.bankAPI.model.User;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Set;
 
 import static ru.task.bankAPI.service.UserCardService.addCardToUser;
