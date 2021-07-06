@@ -41,7 +41,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User findUserByName(String userName) {
         try (PreparedStatement statement = DataSourceHelper.connection()
-                .prepareStatement("select * from user where name=?")) {
+                .prepareStatement("select * from USER left join CARD C on USER.ID = C.BANK_USER_ID where NAME = ?")) {
             statement.setString(1, userName);
             statement.execute();
             ResultSet resultSet = statement.getResultSet();
@@ -82,16 +82,18 @@ public class UserDaoImpl implements UserDao {
         user.setId(resultSet.getInt("ID"));
         user.setName(resultSet.getString("NAME"));
         try {
-            int cardId = resultSet.getInt("CARD_ID");
-            if (cardId != 0) {
-                String cardNumber = resultSet.getString("NUMBER");
-                double cardBalance = resultSet.getDouble("BALANCE");
-                Card card = new Card();
-                card.setId(cardId);
-                card.setNumber(cardNumber);
-                card.setBalance(cardBalance);
-                card.setUser(user);
-                user.getCards().add(card);
+            while (resultSet.next()) {
+                int cardId = resultSet.getInt("CARD_ID");
+                if (cardId != 0) {
+                    String cardNumber = resultSet.getString("NUMBER");
+                    double cardBalance = resultSet.getDouble("BALANCE");
+                    Card card = new Card();
+                    card.setId(cardId);
+                    card.setNumber(cardNumber);
+                    card.setBalance(cardBalance);
+                    card.setUser(user);
+                    user.getCards().add(card);
+                }
             }
         } catch (Exception e) {
         }

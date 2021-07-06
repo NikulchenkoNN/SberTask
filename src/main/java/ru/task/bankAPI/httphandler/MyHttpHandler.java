@@ -7,7 +7,6 @@ import ru.task.bankAPI.dao.CardDao;
 import ru.task.bankAPI.dao.CardDaoImpl;
 import ru.task.bankAPI.dao.UserDao;
 import ru.task.bankAPI.dao.UserDaoImpl;
-import ru.task.bankAPI.model.Card;
 import ru.task.bankAPI.model.User;
 import ru.task.bankAPI.service.UserCardService;
 
@@ -46,10 +45,8 @@ public class MyHttpHandler implements HttpHandler {
                 String cardNumber = CardNumber.getInstance().createNumber();
                 rawQuery = exchange.getRequestURI().getRawQuery();
                 query = rawQuery.substring(rawQuery.lastIndexOf("=") + 1);
-                User user1 = userDao.findUserByName(query);
-                Card card1 = cardDao.createCard(cardNumber);
-                UserCardService.addCardToUser(user1, card1);
-                response = cardNumber + " created for user " + user1.getName();
+                UserCardService.addCardToUser(userDao.findUserByName(query).getName(), cardDao.createCard(cardNumber).getNumber());
+                response = cardNumber + " created for user " + query;
                 status = 200;
                 break;
 

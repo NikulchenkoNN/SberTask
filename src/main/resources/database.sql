@@ -1,6 +1,5 @@
 set schema public;
 
-
 drop table IF EXISTS CARD;
 drop table IF EXISTS USER;
 
