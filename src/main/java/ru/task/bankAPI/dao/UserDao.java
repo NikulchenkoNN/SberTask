@@ -5,8 +5,8 @@ import ru.task.bankAPI.model.User;
 import java.util.Set;
 
 public interface UserDao {
-    User findUserById(int userId);
-    User findUserByName(String userName);
-    User createUser(String userName);
+    User findUserById(Long userId);
+//    User findUserByName(String userName);
+    User createUser(User user);
     Set<User> getUsers();
 }

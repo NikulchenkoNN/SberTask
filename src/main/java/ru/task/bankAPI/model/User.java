@@ -9,7 +9,7 @@ import java.util.List;
 @JsonAutoDetect
 public class User {
      @Getter @Setter
-     private int id;
+     private Long id;
      @Getter @Setter
      private String name;
      @Getter @Setter
@@ -24,7 +24,7 @@ public class User {
           return "User{" +
                   "id=" + id +
                   ", name='" + name + '\'' +
-                  (!cards.isEmpty() ? ", cards =" + cards : "") +
+                  (!cards.isEmpty() ? ", cards=" + cards : "") +
                   '}';
      }
 }

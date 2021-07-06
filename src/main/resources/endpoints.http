@@ -1,4 +1,4 @@
-POST http://localhost:8080/create.user?name=Alex
+POST http://localhost:8080/create.user
 Content-Type: application/json
 
 {"name":"Alex"}

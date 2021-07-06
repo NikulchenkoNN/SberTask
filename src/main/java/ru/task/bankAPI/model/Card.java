@@ -5,14 +5,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @JsonAutoDetect
 public class Card {
     @Getter @Setter
-    private int id;
+    private Long id;
     @Getter @Setter
     private String number;
     @Getter @Setter
-    private double balance;
+    private BigDecimal balance;
     @JsonIgnore
     @Getter @Setter
     private User user;
