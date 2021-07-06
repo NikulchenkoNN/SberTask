@@ -38,8 +38,7 @@ public class UserDaoImpl implements UserDao {
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     user.setId(generatedKeys.getLong(1));
-                }
-                else {
+                } else {
                     throw new SQLException("Creating user failed, no ID obtained.");
                 }
             }
@@ -65,14 +64,14 @@ public class UserDaoImpl implements UserDao {
 //    }
 
     @Override
-    public Set<User> getUsers() {
+    public List<User> getUsers() {
         try (PreparedStatement statement = DataSourceHelper.connection()
                 .prepareStatement("select * from user u left join CARD c on u.ID=c.BANK_USER_ID")) {
             statement.execute();
             ResultSet resultSet = statement.getResultSet();
-            Set<User> users = new HashSet<>();
+            List<User> users = new ArrayList<>();
             while (resultSet.next()) {
-// TODO cardDao findByUser
+                users.add(resultSetForUser(resultSet));
             }
             return users;
         } catch (SQLException e) {
@@ -87,16 +86,18 @@ public class UserDaoImpl implements UserDao {
         user.setId(resultSet.getLong("ID"));
         user.setName(resultSet.getString("NAME"));
         do {
-            Long cardId = (Long) resultSet.getObject("CARD_ID");
+            Object cardId = resultSet.getObject(3);
             if (cardId != null) {
                 String cardNumber = resultSet.getString("NUMBER");
                 BigDecimal cardBalance = resultSet.getBigDecimal("BALANCE");
                 Card card = new Card();
-                card.setId(cardId);
+                card.setId(Long.parseLong(cardId.toString()));
                 card.setNumber(cardNumber);
                 card.setBalance(cardBalance);
                 card.setUser(user);
-                user.getCards().add(card);
+                if (card.getUser().getId() == user.getId()) {
+                    user.getCards().add(card);
+                }
             }
         } while (resultSet.next());
         return user;

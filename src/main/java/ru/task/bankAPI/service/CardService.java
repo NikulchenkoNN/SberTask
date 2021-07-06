@@ -7,7 +7,6 @@ import ru.task.bankAPI.dao.UserDaoImpl;
 import ru.task.bankAPI.model.Card;
 
 public class CardService {
-//    TODO
     private UserDao userDao = new UserDaoImpl();
     private CardDao cardDao = new CardDaoImpl(userDao);
 

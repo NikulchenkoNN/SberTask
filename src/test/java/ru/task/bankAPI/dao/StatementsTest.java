@@ -8,10 +8,14 @@ import ru.task.bankAPI.cardnumber.CardNumber;
 import ru.task.bankAPI.connection.DataSourceHelper;
 import ru.task.bankAPI.model.Card;
 import ru.task.bankAPI.model.User;
+import ru.task.bankAPI.service.CardService;
+import ru.task.bankAPI.service.UserCardService;
+import ru.task.bankAPI.service.UserService;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 import java.util.Set;
 
 import static ru.task.bankAPI.service.UserCardService.addCardToUser;
@@ -31,36 +35,37 @@ public class StatementsTest {
         System.out.println();
     }
 
-//    @BeforeEach
-//    public void clearDB() {
-//        try (Statement statement = DataSourceHelper.connection().createStatement()) {
-//            statement.executeUpdate("truncate table card");
-//            statement.executeUpdate("truncate table user");
-//        } catch (SQLException e) {
-//            throw new RuntimeException();
-//        }
-//    }
+    @BeforeEach
+    public void clearDB() {
+        try (Statement statement = DataSourceHelper.connection().createStatement()) {
+            statement.executeUpdate("truncate table USER");
+            statement.executeUpdate("truncate table CARD");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+    }
 
     @Test
     public void createEntities() {
-//        User user1 = userDao.createUser("Nick");
-//        User user2 = userDao.createUser("Dim");
-//        User user3 = userDao.createUser("Alex");
+        UserService userService = new UserService();
+        CardService cardService = new CardService();
+        UserCardService service = new UserCardService();
+        User user1 = userService.createUser("Nick");
+        User user2 = userService.createUser("Alex");
+        User user3 = userService.createUser("Dim");
 
-//        String cardN1 = cardNumber.createNumber();
-//        Card card1 = cardDao.createCard(cardN1);
-//
-//        String cardN2 = cardNumber.createNumber();
-//        Card card2 = cardDao.createCard(cardN2);
-//
-//        String cardN3 = cardNumber.createNumber();
-//        Card card3 = cardDao.createCard(cardN3);
-//
-//        String cardN4 = cardNumber.createNumber();
-//        Card card4 = cardDao.createCard(cardN4);
-//
-//        String cardN5 = cardNumber.createNumber();
-//        Card card5 = cardDao.createCard(cardN5);
+        Card card1 = cardService.createCard(cardNumber.createNumber());
+        Card card2 = cardService.createCard(cardNumber.createNumber());
+        Card card3 = cardService.createCard(cardNumber.createNumber());
+        Card card4 = cardService.createCard(cardNumber.createNumber());
+
+        addCardToUser(user1.getId(), card1.getNumber());
+        addCardToUser(user2.getId(), card2.getNumber());
+        addCardToUser(user3.getId(), card3.getNumber());
+        addCardToUser(user1.getId(), card4.getNumber());
+
+
 //
 //        addCardToUser("Nick", cardN1);
 //        addCardToUser("Nick", cardN2);
@@ -69,7 +74,7 @@ public class StatementsTest {
 //        addCardToUser("Dim", cardN5);
 
 
-        Set<User> users = userDao.getUsers();
+        List<User> users = userDao.getUsers();
         users.forEach(System.out::println);
     }
 

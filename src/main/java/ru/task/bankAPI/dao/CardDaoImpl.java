@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,7 +21,7 @@ public class CardDaoImpl implements CardDao {
     @Override
     public Card createCard(Card card) {
         try (PreparedStatement statement = DataSourceHelper.connection()
-                .prepareStatement("insert into card (number) values (?)")) {
+                .prepareStatement("insert into card (number) values (?)", Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, card.getNumber());
             statement.executeUpdate();
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
