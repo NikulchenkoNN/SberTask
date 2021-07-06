@@ -78,10 +78,13 @@ public class StatementsTest {
         System.out.println("Cards");
         cardSet.forEach(System.out::println);
         System.out.println();
+
+//        Set<User> users = userDao.getUsers();
+//        users.forEach(System.out::println);
     }
 
     @Test
-    public void connect() {
+    public void testConnect() {
         try (Connection connection = DataSourceHelper.connection()) {
             System.out.println(connection.isValid(1));
             System.out.println(connection.isClosed());
@@ -91,7 +94,7 @@ public class StatementsTest {
     }
 
     @Test
-    public void updateBalane() {
+    public void updateBalance() {
         User alex = userDao.createUser("Alex");
         Card card = cardDao.createCard(cardNumber.createNumber());
         addCardToUser(userDao.findUserByName("Alex"), cardDao.findCardByNumber(card.getNumber()));

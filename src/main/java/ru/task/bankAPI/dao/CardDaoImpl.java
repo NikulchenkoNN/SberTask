@@ -17,7 +17,7 @@ public class CardDaoImpl implements CardDao {
     }
 
     @Override
-    public Card createCard( String number) {
+    public Card createCard(String number) {
         try (PreparedStatement statement = DataSourceHelper.connection()
                 .prepareStatement("insert into card (number) values (?)")) {
             statement.setString(1, number);
@@ -38,7 +38,7 @@ public class CardDaoImpl implements CardDao {
             resultSet.next();
             return resultSetForCard(resultSet);
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new RuntimeException("find dy card number");
         }
     }
 

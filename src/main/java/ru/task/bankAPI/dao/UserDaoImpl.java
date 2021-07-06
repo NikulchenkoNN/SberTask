@@ -33,28 +33,30 @@ public class UserDaoImpl implements UserDao {
             statement.execute();
             return findUserByName(userName);
         } catch (SQLException e) {
-            throw new RuntimeException("Create user failure");
+            e.printStackTrace();
         }
+        return null;
     }
 
     @Override
     public User findUserByName(String userName) {
         try (PreparedStatement statement = DataSourceHelper.connection()
-                .prepareStatement("select * from user u where u.name=?")) {
+                .prepareStatement("select * from user where name=?")) {
             statement.setString(1, userName);
             statement.execute();
             ResultSet resultSet = statement.getResultSet();
             resultSet.next();
             return resultSetForUser(resultSet);
         } catch (SQLException e) {
-            throw new RuntimeException("tuta");
+            throw new RuntimeException("username");
         }
     }
 
     @Override
     public Set<User> getUsers() {
         try (PreparedStatement statement = DataSourceHelper.connection()
-                .prepareStatement("select * from user u left join card c on u.id=c.BANK_USER_ID")) {
+                .prepareStatement("select * from user")) {
+            statement.execute();
             ResultSet resultSet = statement.getResultSet();
             Set<User> users = new HashSet<>();
             while (resultSet.next()) {
@@ -69,8 +71,9 @@ public class UserDaoImpl implements UserDao {
             }
             return users;
         } catch (SQLException e) {
-            throw new RuntimeException();
+            e.printStackTrace();
         }
+        return null;
     }
 
     private User resultSetForUser(ResultSet resultSet) throws SQLException {

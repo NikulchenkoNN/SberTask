@@ -37,8 +37,6 @@ public class CardNumber {
         for (int i = 0; i < 4; i++) {
             int res = (int) (Math.random() * 9000) + 1000;
             result.append(res);
-            if (result.length() < 16)
-                result.append(" ");
         }
         cards.add(result.toString());
     }
