@@ -2,7 +2,6 @@ package ru.task.bankAPI.dao;
 
 import ru.task.bankAPI.connection.DataSourceHelper;
 import ru.task.bankAPI.model.Card;
-import ru.task.bankAPI.model.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,7 +28,8 @@ public class CardDaoImpl implements CardDao {
         }
     }
 
-    private Card findCardByNumber(String number) {
+    @Override
+    public Card findCardByNumber(String number) {
         try (PreparedStatement statement = DataSourceHelper.connection()
                 .prepareStatement("select * from card c where c.number = ?")) {
             statement.setString(1, number);
@@ -61,7 +61,7 @@ public class CardDaoImpl implements CardDao {
 
     @Override
     public void updateCardBalance(String user, String cardNumber, double cash) {
-        double oldBalance = getBalanceCard(userDao.findUserByName(user).getName(), cardNumber);
+        double oldBalance = getCardBalance(userDao.findUserByName(user).getName(), cardNumber);
         double newBalance = oldBalance + cash;
         try (PreparedStatement statement = DataSourceHelper.connection()
                 .prepareStatement("update card set balance = ? where number = ?")) {
@@ -75,7 +75,7 @@ public class CardDaoImpl implements CardDao {
     }
 
     @Override
-    public double getBalanceCard(String user, String cardNumber) {
+    public double getCardBalance(String user, String cardNumber) {
         try (PreparedStatement statement = DataSourceHelper.connection()
                 .prepareStatement("select * from card c inner join (select * from user where id = ?) u on u.id = c.bank_user_id where c.number = ?")) {
             statement.setInt(1, userDao.findUserByName(user).getId());
@@ -93,6 +93,7 @@ public class CardDaoImpl implements CardDao {
         Card card = new Card();
         card.setId(resultSet.getInt("ID"));
         card.setNumber(resultSet.getString("NUMBER"));
+        card.setBalance(resultSet.getDouble("BALANCE"));
         int userId = resultSet.getInt("BANK_USER_ID");
         if (userId != 0)
             card.setUser(userDao.findUserById(userId));

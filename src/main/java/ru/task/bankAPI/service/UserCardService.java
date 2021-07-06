@@ -20,6 +20,4 @@ public class UserCardService {
             throw new RuntimeException();
         }
     }
-
-
 }

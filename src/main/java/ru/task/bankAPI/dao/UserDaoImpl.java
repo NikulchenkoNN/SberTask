@@ -82,9 +82,11 @@ public class UserDaoImpl implements UserDao {
             int cardId = resultSet.getInt("CARD_ID");
             if (cardId != 0) {
                 String cardNumber = resultSet.getString("NUMBER");
+                double cardBalance = resultSet.getDouble("BALANCE");
                 Card card = new Card();
                 card.setId(cardId);
                 card.setNumber(cardNumber);
+                card.setBalance(cardBalance);
                 card.setUser(user);
                 user.getCards().add(card);
             }

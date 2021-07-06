@@ -12,12 +12,16 @@ import ru.task.bankAPI.model.User;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import static ru.task.bankAPI.service.UserCardService.addCardToUser;
 
 public class StatementsTest {
     private static UserDao userDao;
     private static CardDao cardDao;
+    private static final CardNumber cardNumber = CardNumber.getInstance();
+
 
     @BeforeAll
     public static void createDao() throws SQLException {
@@ -40,49 +44,40 @@ public class StatementsTest {
 
     @Test
     public void createEntities() {
-        CardNumber cardNumber = CardNumber.getInstance();
         User user1 = userDao.createUser("Nick");
-//        User user2 = userDao.createUser("Dim");
-//        User user3 = userDao.createUser("Alex");
+        User user2 = userDao.createUser("Dim");
+        User user3 = userDao.createUser("Alex");
 
         Card card1 = cardDao.createCard(cardNumber.createNumber());
-//        Card card2 = cardDao.createCard(cardNumber.createNumber());
-//        Card card3 = cardDao.createCard(cardNumber.createNumber());
-//        Card card4 = cardDao.createCard(cardNumber.createNumber());
-//        Card card5 = cardDao.createCard(cardNumber.createNumber());
+        Card card2 = cardDao.createCard(cardNumber.createNumber());
+        Card card3 = cardDao.createCard(cardNumber.createNumber());
+        Card card4 = cardDao.createCard(cardNumber.createNumber());
+        Card card5 = cardDao.createCard(cardNumber.createNumber());
         addCardToUser(user1, card1);
-//        addCardToUser(user1, card2);
-//        addCardToUser(user2, card3);
-//        addCardToUser(user3, card4);
-//        addCardToUser(user2, card5);
+        addCardToUser(user1, card2);
+        addCardToUser(user2, card3);
+        addCardToUser(user3, card4);
+        addCardToUser(user2, card5);
 
-//        System.out.println(cardDao.getBalanceCard(user1, card1.getNumber()));
-        cardDao.updateCardBalance(user1.getName(), card1.getNumber(), 20);
-//        System.out.println();
-        System.out.println(cardDao.getBalanceCard(user1.getName(), card1.getNumber()));
+        List<User> userSet = new ArrayList<>();
+        userSet.add(user1);
+        userSet.add(user2);
+        userSet.add(user3);
 
+        List<Card> cardSet = new ArrayList<>();
+        cardSet.add(card1);
+        cardSet.add(card2);
+        cardSet.add(card3);
+        cardSet.add(card4);
+        cardSet.add(card5);
 
-//        List<User> userSet = new ArrayList<>();
-//        userSet.add(user1);
-//        userSet.add(user2);
-//        userSet.add(user3);
+        System.out.println("Users");
+        userSet.forEach(System.out::println);
+        System.out.println();
 
-
-//        List<Card> cardSet = new ArrayList<>();
-//        cardSet.add(card1);
-//        cardSet.add(card2);
-//        cardSet.add(card3);
-//        cardSet.add(card4);
-//        cardSet.add(card5);
-
-//        System.out.println("Users");
-//        userSet.forEach(System.out::println);
-//        System.out.println();
-//
-//
-//        System.out.println("Cards");
-//        cardSet.forEach(System.out::println);
-//        System.out.println();
+        System.out.println("Cards");
+        cardSet.forEach(System.out::println);
+        System.out.println();
     }
 
     @Test
@@ -90,8 +85,19 @@ public class StatementsTest {
         try (Connection connection = DataSourceHelper.connection()) {
             System.out.println(connection.isValid(1));
             System.out.println(connection.isClosed());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+    }
+
+    @Test
+    public void updateBalane() {
+        User alex = userDao.createUser("Alex");
+        Card card = cardDao.createCard(cardNumber.createNumber());
+        addCardToUser(userDao.findUserByName("Alex"), cardDao.findCardByNumber(card.getNumber()));
+        System.out.println(cardDao.getCardBalance(alex.getName(), card.getNumber()));
+        cardDao.updateCardBalance(alex.getName(), card.getNumber(), 130);
+        System.out.println();
+        System.out.println(cardDao.getCardBalance(alex.getName(), card.getNumber()));
     }
 }
