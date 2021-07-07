@@ -45,8 +45,8 @@ public class UserDaoImpl implements UserDao {
             return resultSetForUser(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException();
         }
+        return null;
     }
 
     @Override
@@ -59,8 +59,9 @@ public class UserDaoImpl implements UserDao {
             resultSet.next();
             return resultSetForUser(resultSet);
         } catch (SQLException e) {
-            throw new RuntimeException("username");
+            e.printStackTrace();
         }
+        return null;
     }
 
     @Override

@@ -7,6 +7,7 @@ import ru.task.bankAPI.dto.DtoImpl;
 import ru.task.bankAPI.model.Card;
 import ru.task.bankAPI.model.User;
 import ru.task.bankAPI.service.CardService;
+import ru.task.bankAPI.service.UserService;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -20,6 +21,7 @@ public class ShowCartsHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
 
         User user = (User) dto.jsonToObject(exchange.getRequestBody(), User.class);
+        user = UserService.findUserByName(user.getName());
         Set<Card> cardsByUser = CardService.getCardsByUser(user.getId());
         String response = dto.objectToJSON(cardsByUser);
         exchange.sendResponseHeaders(200, response.length());
