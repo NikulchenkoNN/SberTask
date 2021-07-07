@@ -71,7 +71,8 @@ public class UserDaoImpl implements UserDao {
             ResultSet resultSet = statement.getResultSet();
             Set<User> users = new HashSet<>();
             while (resultSet.next()) {
-                
+                User user = resultSetForUser(resultSet);
+                users.add(user);
             }
             return users;
         } catch (SQLException e) {
