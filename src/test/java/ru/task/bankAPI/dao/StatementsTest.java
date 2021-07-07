@@ -2,20 +2,16 @@ package ru.task.bankAPI.dao;
 
 import org.h2.tools.Server;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.task.bankAPI.cardnumber.CardNumber;
 import ru.task.bankAPI.connection.DataSourceHelper;
 import ru.task.bankAPI.model.Card;
 import ru.task.bankAPI.model.User;
 import ru.task.bankAPI.service.CardService;
-import ru.task.bankAPI.service.UserCardService;
 import ru.task.bankAPI.service.UserService;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.List;
 import java.util.Set;
 
 import static ru.task.bankAPI.service.UserCardService.addCardToUser;
@@ -35,22 +31,21 @@ public class StatementsTest {
         System.out.println();
     }
 
-    @BeforeEach
-    public void clearDB() {
-        try (Statement statement = DataSourceHelper.connection().createStatement()) {
-            statement.executeUpdate("truncate table USER");
-            statement.executeUpdate("truncate table CARD");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException();
-        }
-    }
+//    @BeforeEach
+//    public void clearDB() {
+//        try (Statement statement = DataSourceHelper.connection().createStatement()) {
+//            statement.executeUpdate("truncate table USER");
+//            statement.executeUpdate("truncate table CARD");
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            throw new RuntimeException();
+//        }
+//    }
 
     @Test
     public void createEntities() {
         UserService userService = new UserService();
         CardService cardService = new CardService();
-        UserCardService service = new UserCardService();
         User user1 = userService.createUser("Nick");
         User user2 = userService.createUser("Alex");
         User user3 = userService.createUser("Dim");
@@ -74,7 +69,7 @@ public class StatementsTest {
 //        addCardToUser("Dim", cardN5);
 
 
-        List<User> users = userDao.getUsers();
+        Set<User> users = userDao.getUsers();
         users.forEach(System.out::println);
     }
 

@@ -64,14 +64,14 @@ public class UserDaoImpl implements UserDao {
 //    }
 
     @Override
-    public List<User> getUsers() {
+    public Set<User> getUsers() {
         try (PreparedStatement statement = DataSourceHelper.connection()
                 .prepareStatement("select * from user u left join CARD c on u.ID=c.BANK_USER_ID")) {
             statement.execute();
             ResultSet resultSet = statement.getResultSet();
-            List<User> users = new ArrayList<>();
+            Set<User> users = new HashSet<>();
             while (resultSet.next()) {
-                users.add(resultSetForUser(resultSet));
+                
             }
             return users;
         } catch (SQLException e) {
@@ -85,17 +85,19 @@ public class UserDaoImpl implements UserDao {
         user.setCards(new ArrayList<>());
         user.setId(resultSet.getLong("ID"));
         user.setName(resultSet.getString("NAME"));
+
         do {
             Object cardId = resultSet.getObject(3);
             if (cardId != null) {
                 String cardNumber = resultSet.getString("NUMBER");
                 BigDecimal cardBalance = resultSet.getBigDecimal("BALANCE");
-                Card card = new Card();
-                card.setId(Long.parseLong(cardId.toString()));
-                card.setNumber(cardNumber);
-                card.setBalance(cardBalance);
-                card.setUser(user);
-                if (card.getUser().getId() == user.getId()) {
+                Long bankUserId = resultSet.getLong("BANK_USER_ID");
+                if (user.getId().equals(bankUserId)) {
+                    Card card = new Card();
+                    card.setId(Long.parseLong(cardId.toString()));
+                    card.setNumber(cardNumber);
+                    card.setBalance(cardBalance);
+                    card.setUser(user);
                     user.getCards().add(card);
                 }
             }
