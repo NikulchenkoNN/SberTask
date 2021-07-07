@@ -2,6 +2,7 @@ package ru.task.bankAPI.httphandler;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import ru.task.bankAPI.dto.Dto;
 import ru.task.bankAPI.dto.DtoImpl;
 import ru.task.bankAPI.model.Card;
 import ru.task.bankAPI.model.User;
@@ -13,7 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Set;
 
 public class ShowCartsHandler implements HttpHandler {
-    DtoImpl dto;
+    Dto dto = new DtoImpl();
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {

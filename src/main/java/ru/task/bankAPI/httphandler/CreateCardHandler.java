@@ -24,7 +24,7 @@ public class CreateCardHandler implements HttpHandler {
         Card card = CardService.createCard(cardNumber);
         Long userId = UserService.findUserByName(user.getName()).getId();
         UserCardService.addCardToUser(userId, cardNumber);
-        String response = dto.objectToJSON(card);
+        String response = dto.objectToJSON(CardService.getCardsByUser(userId));
         exchange.sendResponseHeaders(200, response.length());
         OutputStream os = exchange.getResponseBody();
         os.write(response.getBytes(StandardCharsets.UTF_8));

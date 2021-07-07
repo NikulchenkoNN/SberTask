@@ -1,7 +1,6 @@
 package ru.task.bankAPI.model;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,7 +14,6 @@ public class Card {
     private String number;
     @Getter @Setter
     private BigDecimal balance;
-    @JsonIgnore
     @Getter @Setter
     private User user;
 

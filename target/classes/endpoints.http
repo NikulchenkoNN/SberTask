@@ -1,12 +1,19 @@
 POST http://localhost:8080/newCard
 Content-Type: application/json
 
-{"user": "Alex"}
+{"name": "Alex"}
 
 ###
 POST http://localhost:8080/newUser
 Content-Type: application/json
 
 {"name":"Alex"}
+
+###
+
+POST http://localhost:8080/newUser
+Content-Type: application/json
+
+{"name":"Dim"}
 
 ###

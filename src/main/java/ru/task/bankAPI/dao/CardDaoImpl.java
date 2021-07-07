@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class CardDaoImpl implements CardDao {
-    UserDao userDao;
+    UserDao userDao = new UserDaoImpl();
 
     @Override
     public Card createCard(Card card) {
