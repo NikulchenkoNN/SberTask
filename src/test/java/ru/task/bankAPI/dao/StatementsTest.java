@@ -26,7 +26,7 @@ public class StatementsTest {
     public static void createDao() throws SQLException {
         DataSourceHelper.createDb();
         userDao = new UserDaoImpl();
-        cardDao = new CardDaoImpl(userDao);
+        cardDao = new CardDaoImpl();
         Server.createTcpServer().start();
         System.out.println();
     }
@@ -34,8 +34,10 @@ public class StatementsTest {
 //    @BeforeEach
 //    public void clearDB() {
 //        try (Statement statement = DataSourceHelper.connection().createStatement()) {
-//            statement.executeUpdate("truncate table USER");
 //            statement.executeUpdate("truncate table CARD");
+//            statement.executeUpdate("alter table USER ALTER COLUMN ID BIGINT");
+//            statement.executeUpdate("truncate table USER");
+//
 //        } catch (SQLException e) {
 //            e.printStackTrace();
 //            throw new RuntimeException();
@@ -44,16 +46,14 @@ public class StatementsTest {
 
     @Test
     public void createEntities() {
-        UserService userService = new UserService();
-        CardService cardService = new CardService();
-        User user1 = userService.createUser("Nick");
-        User user2 = userService.createUser("Alex");
-        User user3 = userService.createUser("Dim");
+        User user1 = UserService.createUser("Nick");
+        User user2 = UserService.createUser("Alex");
+        User user3 = UserService.createUser("Dim");
 
-        Card card1 = cardService.createCard(cardNumber.createNumber());
-        Card card2 = cardService.createCard(cardNumber.createNumber());
-        Card card3 = cardService.createCard(cardNumber.createNumber());
-        Card card4 = cardService.createCard(cardNumber.createNumber());
+        Card card1 = CardService.createCard(cardNumber.createNumber());
+        Card card2 = CardService.createCard(cardNumber.createNumber());
+        Card card3 = CardService.createCard(cardNumber.createNumber());
+        Card card4 = CardService.createCard(cardNumber.createNumber());
 
         addCardToUser(user1.getId(), card1.getNumber());
         addCardToUser(user2.getId(), card2.getNumber());
@@ -84,9 +84,10 @@ public class StatementsTest {
     }
 
     @Test
-    public void testDouble() {
-        System.out.println(0.1+0.2);
+    public void apiTest() {
+        Server server = new Server();
     }
+
 
 //    @Test
 //    public void updateBalance() {

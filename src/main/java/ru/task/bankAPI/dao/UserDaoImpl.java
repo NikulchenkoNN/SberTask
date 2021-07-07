@@ -49,19 +49,19 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
-//    @Override
-//    public User findUserByName(String userName) {
-//        try (PreparedStatement statement = DataSourceHelper.connection()
-//                .prepareStatement("select * from USER left join CARD C on USER.ID = C.BANK_USER_ID where NAME = ?")) {
-//            statement.setString(1, userName);
-//            statement.execute();
-//            ResultSet resultSet = statement.getResultSet();
-//            resultSet.next();
-//            return resultSetForUser(resultSet);
-//        } catch (SQLException e) {
-//            throw new RuntimeException("username");
-//        }
-//    }
+    @Override
+    public User findUserByName(String userName) {
+        try (PreparedStatement statement = DataSourceHelper.connection()
+                .prepareStatement("select * from USER left join CARD C on USER.ID = C.BANK_USER_ID where NAME = ?")) {
+            statement.setString(1, userName);
+            statement.execute();
+            ResultSet resultSet = statement.getResultSet();
+            resultSet.next();
+            return resultSetForUser(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException("username");
+        }
+    }
 
     @Override
     public Set<User> getUsers() {
@@ -86,23 +86,25 @@ public class UserDaoImpl implements UserDao {
         user.setCards(new ArrayList<>());
         user.setId(resultSet.getLong("ID"));
         user.setName(resultSet.getString("NAME"));
-
-        do {
-            Object cardId = resultSet.getObject(3);
-            if (cardId != null) {
-                String cardNumber = resultSet.getString("NUMBER");
-                BigDecimal cardBalance = resultSet.getBigDecimal("BALANCE");
-                Long bankUserId = resultSet.getLong("BANK_USER_ID");
-                if (user.getId().equals(bankUserId)) {
-                    Card card = new Card();
-                    card.setId(Long.parseLong(cardId.toString()));
-                    card.setNumber(cardNumber);
-                    card.setBalance(cardBalance);
-                    card.setUser(user);
-                    user.getCards().add(card);
+        try {
+            do {
+                Object cardId = resultSet.getObject(3);
+                if (cardId != null) {
+                    String cardNumber = resultSet.getString("NUMBER");
+                    BigDecimal cardBalance = resultSet.getBigDecimal("BALANCE");
+                    Long bankUserId = resultSet.getLong("BANK_USER_ID");
+                    if (user.getId().equals(bankUserId)) {
+                        Card card = new Card();
+                        card.setId(Long.parseLong(cardId.toString()));
+                        card.setNumber(cardNumber);
+                        card.setBalance(cardBalance);
+                        card.setUser(user);
+                        user.getCards().add(card);
+                    }
                 }
-            }
-        } while (resultSet.next());
+            } while (resultSet.next());
+        } catch (SQLException e) {
+        }
         return user;
     }
 }

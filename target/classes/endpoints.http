@@ -1,4 +1,10 @@
-POST http://localhost:8080/create.user
+POST http://localhost:8080/newCard
+Content-Type: application/json
+
+{"user": "Alex"}
+
+###
+POST http://localhost:8080/newUser
 Content-Type: application/json
 
 {"name":"Alex"}

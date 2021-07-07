@@ -6,7 +6,7 @@ import java.util.Set;
 
 public interface UserDao {
     User findUserById(Long userId);
-//    User findUserByName(String userName);
+    User findUserByName(String userName);
     User createUser(User user);
     Set<User> getUsers();
 }
