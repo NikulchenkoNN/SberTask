@@ -26,7 +26,7 @@ public class UpdateBalanceHandler implements HttpHandler {
         String userName = o.getName();
         User user = UserService.findUserByName(userName);
 
-        if (user.getId() != null) {
+        if (user != null) {
             Long userId = user.getId();
             Long cardId = o.getCardId();
             BigDecimal cash = o.getCash();

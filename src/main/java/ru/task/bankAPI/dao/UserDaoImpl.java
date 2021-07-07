@@ -84,9 +84,14 @@ public class UserDaoImpl implements UserDao {
 
     private User resultSetForUser(ResultSet resultSet) throws SQLException {
         User user = new User();
-        user.setCards(new ArrayList<>());
-        user.setId(resultSet.getLong("ID"));
-        user.setName(resultSet.getString("NAME"));
+
+        try {
+            user.setCards(new ArrayList<>());
+            user.setId(resultSet.getLong("ID"));
+            user.setName(resultSet.getString("NAME"));
+        } catch (SQLException e) {
+            return null;
+        }
         try {
             do {
                 Object cardId = resultSet.getObject(3);

@@ -1,7 +1,7 @@
 POST http://localhost:8080/showCards
 Content-Type: application/json
 
-{"name" : "Alex"}
+{"name" : "Dim"}
 
 ###
 
@@ -10,7 +10,7 @@ Content-Type: application/json
 POST http://localhost:8080/updateBalance
 Content-Type: application/json
 
-{"name" :  "Dim", "cardId" :"1", "cash": "25"}
+{"name" :  "Alex", "cardId" :"2", "cash": "15"}
 
 ###
 POST http://localhost:8080/newCard
