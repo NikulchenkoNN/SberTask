@@ -5,6 +5,7 @@ import ru.task.bankAPI.connection.DataSourceHelper;
 import ru.task.bankAPI.httphandler.CreateCardHandler;
 import ru.task.bankAPI.httphandler.CreateUserHandler;
 import ru.task.bankAPI.httphandler.ShowCartsHandler;
+import ru.task.bankAPI.httphandler.UpdateBalanceHandler;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -15,6 +16,7 @@ public class Server {
         server.createContext("/newCard", new CreateCardHandler());
         server.createContext("/showCards", new ShowCartsHandler());
         server.createContext("/newUser", new CreateUserHandler());
+        server.createContext("/updateBalance", new UpdateBalanceHandler());
         DataSourceHelper.createDb();
         server.start();
     }

@@ -14,21 +14,6 @@ import java.util.*;
 public class UserDaoImpl implements UserDao {
 
     @Override
-    public User findUserById(Long userId) {
-        try (PreparedStatement statement = DataSourceHelper.connection()
-                .prepareStatement("select * from user u where u.ID= ?")) {
-            statement.setLong(1, userId);
-            statement.execute();
-            ResultSet resultSet = statement.getResultSet();
-            resultSet.next();
-            return resultSetForUser(resultSet);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException();
-        }
-    }
-
-    @Override
     public User createUser(User user) {
         try (PreparedStatement statement = DataSourceHelper.connection()
                 .prepareStatement("insert into user (name) values (?)", Statement.RETURN_GENERATED_KEYS)) {
@@ -47,6 +32,21 @@ public class UserDaoImpl implements UserDao {
             e.printStackTrace();
         }
         return user;
+    }
+
+    @Override
+    public User findUserById(Long userId) {
+        try (PreparedStatement statement = DataSourceHelper.connection()
+                .prepareStatement("select * from user u where u.ID= ?")) {
+            statement.setLong(1, userId);
+            statement.execute();
+            ResultSet resultSet = statement.getResultSet();
+            resultSet.next();
+            return resultSetForUser(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
     }
 
     @Override
@@ -103,7 +103,7 @@ public class UserDaoImpl implements UserDao {
                     }
                 }
             } while (resultSet.next());
-        } catch (SQLException e) {
+        } catch (SQLException ignored) {
         }
         return user;
     }

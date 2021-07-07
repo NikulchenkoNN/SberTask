@@ -1,3 +1,9 @@
+POST http://localhost:8080/updateBalance
+Content-Type: application/json
+
+{"name" :  "Alex", "cardId" :"1", "cash": "15.5"}
+
+###
 POST http://localhost:8080/newCard
 Content-Type: application/json
 

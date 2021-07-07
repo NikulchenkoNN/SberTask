@@ -13,6 +13,7 @@ import ru.task.bankAPI.service.UserService;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Set;
 
 public class CreateCardHandler implements HttpHandler {
     DtoImpl dto = new DtoImpl();
@@ -21,13 +22,18 @@ public class CreateCardHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
         User user = (User) dto.jsonToObject(exchange.getRequestBody(), User.class);
         String cardNumber = CardNumber.getInstance().createNumber();
-        Card card = CardService.createCard(cardNumber);
+        CardService.createCard(cardNumber);
         Long userId = UserService.findUserByName(user.getName()).getId();
         UserCardService.addCardToUser(userId, cardNumber);
-        String response = dto.objectToJSON(CardService.getCardsByUser(userId));
+        Set<Card> cards = CardService.getCardsByUser(userId);
+        StringBuilder response = new StringBuilder();
+        for (Card c :
+                cards) {
+            response.append(c).append(" created").append("\n");
+        }
         exchange.sendResponseHeaders(200, response.length());
         OutputStream os = exchange.getResponseBody();
-        os.write(response.getBytes(StandardCharsets.UTF_8));
+        os.write(response.toString().getBytes(StandardCharsets.UTF_8));
         os.close();
     }
 }

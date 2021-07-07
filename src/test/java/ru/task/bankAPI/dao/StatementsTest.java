@@ -5,16 +5,12 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ru.task.bankAPI.cardnumber.CardNumber;
 import ru.task.bankAPI.connection.DataSourceHelper;
-import ru.task.bankAPI.model.Card;
 import ru.task.bankAPI.model.User;
-import ru.task.bankAPI.service.CardService;
 import ru.task.bankAPI.service.UserService;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Set;
-
-import static ru.task.bankAPI.service.UserCardService.addCardToUser;
 
 public class StatementsTest {
     private static UserDao userDao;
@@ -50,15 +46,15 @@ public class StatementsTest {
         User user2 = UserService.createUser("Alex");
         User user3 = UserService.createUser("Dim");
 
-        Card card1 = CardService.createCard(cardNumber.createNumber());
-        Card card2 = CardService.createCard(cardNumber.createNumber());
-        Card card3 = CardService.createCard(cardNumber.createNumber());
-        Card card4 = CardService.createCard(cardNumber.createNumber());
+//        Card card1 = CardService.createCard(cardNumber.createNumber());
+//        Card card2 = CardService.createCard(cardNumber.createNumber());
+//        Card card3 = CardService.createCard(cardNumber.createNumber());
+//        Card card4 = CardService.createCard(cardNumber.createNumber());
 
-        addCardToUser(user1.getId(), card1.getNumber());
-        addCardToUser(user2.getId(), card2.getNumber());
-        addCardToUser(user3.getId(), card3.getNumber());
-        addCardToUser(user1.getId(), card4.getNumber());
+//        addCardToUser(user1.getId(), card1.getNumber());
+//        addCardToUser(user2.getId(), card2.getNumber());
+//        addCardToUser(user3.getId(), card3.getNumber());
+//        addCardToUser(user1.getId(), card4.getNumber());
 
 
 //
