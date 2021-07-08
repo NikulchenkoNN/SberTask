@@ -12,6 +12,7 @@ import ru.task.bankAPI.service.CardService;
 import ru.task.bankAPI.service.UserCardService;
 import ru.task.bankAPI.service.UserService;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Set;
@@ -26,7 +27,17 @@ public class StatementsTest {
     }
 
     @Test
-    public void createdUsersSameInBaseTest() {
+    public void testConnectToServerTest() {
+        try (Connection connection = DataSourceHelper.connection()) {
+            Assertions.assertTrue(connection.isValid(1));
+            Assertions.assertFalse(connection.isClosed());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void createdUsersCreateSameUserInBaseTest() {
         User user1 = UserService.createUser("Nick");
         User user2 = UserService.createUser("Alex");
         User user3 = UserService.createUser("Dim");
@@ -41,7 +52,7 @@ public class StatementsTest {
     }
 
     @Test
-    public void createCardTest() {
+    public void createCardsTest() {
         String num1 = CardNumber.createNumber();
         String num2 = CardNumber.createNumber();
         String num3 = CardNumber.createNumber();
@@ -89,17 +100,7 @@ public class StatementsTest {
     }
 
     @Test
-    public void testConnectToServer() {
-        try (Connection connection = DataSourceHelper.connection()) {
-            Assertions.assertTrue(connection.isValid(1));
-            Assertions.assertFalse(connection.isClosed());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
-    public void cardGetCardBalance() {
+    public void cardGetCardBalanceTest() {
         String card1Number = CardNumber.createNumber();
 
         User user1 = UserService.createUser("Alex");
@@ -109,8 +110,24 @@ public class StatementsTest {
         UserCardService.addCardToUser(user1.getId(), card1Number);
 
         Set<Card> cards = CardService.getCardsByUser(user1.getId());
-        for (Card card: cards) {
+        for (Card card : cards) {
             System.out.println(CardService.getBalance(user1.getId(), card.getId()));
         }
+    }
+
+    @Test
+    public void updateBalanceTest() {
+        String card1Number = CardNumber.createNumber();
+
+        User user1 = UserService.createUser("Vlad");
+
+        CardService.createCard(card1Number);
+
+        UserCardService.addCardToUser(user1.getId(), card1Number);
+
+        BigDecimal beforeUpdate = CardService.getBalance(user1.getId(), CardService.findCardByUserId(user1.getId()).getId());
+        CardService.updateBalance(user1.getId(), CardService.findCardByUserId(user1.getId()).getId(), BigDecimal.valueOf(12.5));
+        BigDecimal afterUpdate = CardService.getBalance(user1.getId(), CardService.findCardByUserId(user1.getId()).getId());
+        Assertions.assertNotEquals(beforeUpdate, afterUpdate);
     }
 }
