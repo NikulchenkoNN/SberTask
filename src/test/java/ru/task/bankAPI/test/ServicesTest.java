@@ -1,4 +1,4 @@
-package ru.task.bankAPI.dao;
+package ru.task.bankAPI.test;
 
 import org.h2.tools.Server;
 import org.junit.jupiter.api.Assertions;
@@ -17,7 +17,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Set;
 
-public class StatementsTest {
+public class ServicesTest {
     private static final CardNumber cardNumber = CardNumber.getInstance();
 
     @BeforeAll
