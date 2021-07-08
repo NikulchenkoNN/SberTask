@@ -1,4 +1,4 @@
-package ru.task.bankAPI.service;
+package ru.task.bankAPI.services;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;

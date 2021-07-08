@@ -1,4 +1,4 @@
-package ru.task.bankAPI.service;
+package ru.task.bankAPI.services;
 
 import ru.task.bankAPI.dao.UserDao;
 import ru.task.bankAPI.dao.UserDaoImpl;

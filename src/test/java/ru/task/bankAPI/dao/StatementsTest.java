@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Test;
 import ru.task.bankAPI.connection.DataSourceHelper;
 import ru.task.bankAPI.model.Card;
 import ru.task.bankAPI.model.User;
-import ru.task.bankAPI.service.CardNumber;
-import ru.task.bankAPI.service.CardService;
-import ru.task.bankAPI.service.UserCardService;
-import ru.task.bankAPI.service.UserService;
+import ru.task.bankAPI.services.CardNumber;
+import ru.task.bankAPI.services.CardService;
+import ru.task.bankAPI.services.UserCardService;
+import ru.task.bankAPI.services.UserService;
 
 import java.math.BigDecimal;
 import java.sql.Connection;

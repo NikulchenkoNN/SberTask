@@ -1,4 +1,4 @@
-package ru.task.bankAPI.dto;
+package ru.task.bankAPI.services.dto;
 
 import lombok.Getter;
 import lombok.Setter;

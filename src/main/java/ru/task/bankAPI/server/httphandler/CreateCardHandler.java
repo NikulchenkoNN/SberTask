@@ -1,14 +1,14 @@
-package ru.task.bankAPI.httphandler;
+package ru.task.bankAPI.server.httphandler;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import ru.task.bankAPI.dto.DtoImpl;
+import ru.task.bankAPI.services.dto.DtoImpl;
 import ru.task.bankAPI.model.Card;
 import ru.task.bankAPI.model.User;
-import ru.task.bankAPI.service.CardNumber;
-import ru.task.bankAPI.service.CardService;
-import ru.task.bankAPI.service.UserCardService;
-import ru.task.bankAPI.service.UserService;
+import ru.task.bankAPI.services.CardNumber;
+import ru.task.bankAPI.services.CardService;
+import ru.task.bankAPI.services.UserCardService;
+import ru.task.bankAPI.services.UserService;
 
 import java.io.IOException;
 import java.io.OutputStream;
