@@ -1,4 +1,4 @@
-package ru.task.bankAPI.cardnumber;
+package ru.task.bankAPI.service;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -19,7 +19,7 @@ public class CardNumber {
         return cardNumber;
     }
 
-    public String createNumber() {
+    public static String createNumber() {
         StringBuilder result = new StringBuilder();
         if (cards.isEmpty())
         {
@@ -33,7 +33,7 @@ public class CardNumber {
         return takeCardNumber();
     }
 
-    private void generateNumber(StringBuilder result) {
+    private static void generateNumber(StringBuilder result) {
         for (int i = 0; i < 4; i++) {
             int res = (int) (Math.random() * 9000) + 1000;
             result.append(res);
@@ -41,7 +41,7 @@ public class CardNumber {
         cards.add(result.toString());
     }
 
-    public String takeCardNumber() {
+    private static String takeCardNumber() {
         List<String> stringList = new ArrayList<>(cards);
         return stringList.get(stringList.size()-1);
     }

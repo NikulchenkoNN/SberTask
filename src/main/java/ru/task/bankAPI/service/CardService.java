@@ -28,7 +28,7 @@ public class CardService {
         return cardDao.getCardBalance(userId, cardId);
     }
 
-    public static Card findCardById(Long userId) {
-        return cardDao.findCardById(userId);
+    public static Card findCardByUserId(Long userId) {
+        return cardDao.findCardByUserId(userId);
     }
 }

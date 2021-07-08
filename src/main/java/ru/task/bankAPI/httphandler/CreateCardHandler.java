@@ -2,10 +2,10 @@ package ru.task.bankAPI.httphandler;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import ru.task.bankAPI.cardnumber.CardNumber;
 import ru.task.bankAPI.dto.DtoImpl;
 import ru.task.bankAPI.model.Card;
 import ru.task.bankAPI.model.User;
+import ru.task.bankAPI.service.CardNumber;
 import ru.task.bankAPI.service.CardService;
 import ru.task.bankAPI.service.UserCardService;
 import ru.task.bankAPI.service.UserService;
@@ -13,6 +13,7 @@ import ru.task.bankAPI.service.UserService;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Set;
 
 public class CreateCardHandler implements HttpHandler {
     DtoImpl dto = new DtoImpl();
@@ -20,15 +21,20 @@ public class CreateCardHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         User user = (User) dto.jsonToObject(exchange.getRequestBody(), User.class);
-        String cardNumber = CardNumber.getInstance().createNumber();
+
+        CardNumber.getInstance();
+        String cardNumber = CardNumber.createNumber();
         CardService.createCard(cardNumber);
+
         Long userId = UserService.findUserByName(user.getName()).getId();
         UserCardService.addCardToUser(userId, cardNumber);
-        Card card = CardService.findCardById(userId);
-        String response = dto.objectToJSON(card);
+
+        Set<Card> cards = CardService.getCardsByUser(userId);
+
+        String response = "User " +user.getName() + "have this cards\n" + dto.objectToJSON(cards);
         exchange.sendResponseHeaders(200, response.length());
         OutputStream os = exchange.getResponseBody();
-        os.write(response.toString().getBytes(StandardCharsets.UTF_8));
+        os.write(response.getBytes(StandardCharsets.UTF_8));
         os.close();
     }
 }

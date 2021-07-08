@@ -14,7 +14,7 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Set;
 
-public class ShowCartsHandler implements HttpHandler {
+public class ShowCardsHandler implements HttpHandler {
     Dto dto = new DtoImpl();
 
     @Override

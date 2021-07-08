@@ -1,34 +1,56 @@
+POST http://localhost:8080/getBalance
+Content-Type: application/json
+
+{"name": "Dim", "cardId": "1"}
+
+###
 POST http://localhost:8080/showCards
 Content-Type: application/json
 
-{"name" : "Alex"}
+{"name" : "Dim"}
 
 ###
 
 
-###
+### Update balance card1 user Dim
 POST http://localhost:8080/updateBalance
 Content-Type: application/json
 
-{"name" :  "Dim", "cardId" :"1", "cash": "25"}
+{"name" :  "Dim", "cardId" :"1", "cash": "15"}
 
-###
+### Create card to Dim
 POST http://localhost:8080/newCard
 Content-Type: application/json
 
 {"name": "Dim"}
 
-###
+### Create one more card to Dim
+POST http://localhost:8080/newCard
+Content-Type: application/json
+
+{"name": "Dim"}
+
+### One more create user Alex
 POST http://localhost:8080/newUser
 Content-Type: application/json
 
 {"name":"Alex"}
 
-###
-
+### `One more create user Dim
 POST http://localhost:8080/newUser
 Content-Type: application/json
 
 {"name":"Dim"}
 
-###
+### Create user Alex
+POST http://localhost:8080/newUser
+Content-Type: application/json
+
+{"name": "Alex"}
+
+
+### Create user Nick
+POST http://localhost:8080/newUser
+Content-Type: application/json
+
+{"name": "Nick"}

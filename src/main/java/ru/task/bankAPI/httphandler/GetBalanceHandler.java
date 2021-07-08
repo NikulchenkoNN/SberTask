@@ -5,7 +5,6 @@ import com.sun.net.httpserver.HttpHandler;
 import ru.task.bankAPI.dto.Dto;
 import ru.task.bankAPI.dto.DtoImpl;
 import ru.task.bankAPI.dto.UpdateBalanceDto;
-import ru.task.bankAPI.model.Card;
 import ru.task.bankAPI.model.User;
 import ru.task.bankAPI.service.CardService;
 import ru.task.bankAPI.service.UserService;
@@ -15,7 +14,7 @@ import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 
-public class UpdateBalanceHandler implements HttpHandler {
+public class GetBalanceHandler implements HttpHandler {
     Dto dto = new DtoImpl();
 
     @Override
@@ -29,16 +28,10 @@ public class UpdateBalanceHandler implements HttpHandler {
         if (user != null) {
             Long userId = user.getId();
             Long cardId = o.getCardId();
-            BigDecimal cash = o.getCash();
-            CardService.updateBalance(userId, cardId, cash);
-            Card card = CardService.findCardByUserId(userId);
-            if (card != null) {
-                response = "Card " + dto.objectToJSON(card) + " balance updated";
-            } else {
-                response = "Card with such data not exist";
-            }
+            BigDecimal balance = CardService.getBalance(userId, cardId);
+            response = "Balance of card " + CardService.findCardByUserId(userId).getNumber() + " of user "+ userName+ " " + dto.objectToJSON(balance);
         } else {
-            response = "User with name " + userName + " have no such card";
+            response = "User " + userName + " don't have such card";
         }
 
         exchange.sendResponseHeaders(200, response.length());

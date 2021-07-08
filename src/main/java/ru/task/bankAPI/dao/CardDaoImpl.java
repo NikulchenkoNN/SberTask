@@ -35,7 +35,7 @@ public class CardDaoImpl implements CardDao {
     }
 
     @Override
-    public Card findCardById(Long userId) {
+    public Card findCardByUserId(Long userId) {
         try (PreparedStatement statement = DataSourceHelper.connection()
                 .prepareStatement("select * from card  where BANK_USER_ID = ?")) {
             statement.setLong(1, userId);

@@ -10,7 +10,7 @@ public class UserService {
     public static User createUser(String name) {
         User user = new User();
         user.setName(name);
-        userDao.createUser(user);
+        user = userDao.createUser(user);
         return user;
     }
 

@@ -34,7 +34,7 @@ public class DataSourceHelper {
                     "create table CARD\n" +
                     "(\n" +
                     "    id           BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,\n" +
-                    "    number       VARCHAR(19)                       NOT NULL,\n" +
+                    "    number       VARCHAR(16)                       NOT NULL,\n" +
                     "    balance      DECIMAL(20, 2) DEFAULT 0.0        NOT NULL,\n" +
                     "    BANK_USER_ID BIGINT,\n" +
                     "    foreign key (BANK_USER_ID) references USER (id)\n" +

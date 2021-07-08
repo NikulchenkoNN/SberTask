@@ -2,21 +2,19 @@ package ru.task.bankAPI.server;
 
 import com.sun.net.httpserver.HttpServer;
 import ru.task.bankAPI.connection.DataSourceHelper;
-import ru.task.bankAPI.httphandler.CreateCardHandler;
-import ru.task.bankAPI.httphandler.CreateUserHandler;
-import ru.task.bankAPI.httphandler.ShowCartsHandler;
-import ru.task.bankAPI.httphandler.UpdateBalanceHandler;
+import ru.task.bankAPI.httphandler.*;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
-public class Server {
+public class MyServer {
     public static void startServer() throws IOException {
         HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
         server.createContext("/newCard", new CreateCardHandler());
-        server.createContext("/showCards", new ShowCartsHandler());
+        server.createContext("/showCards", new ShowCardsHandler());
         server.createContext("/newUser", new CreateUserHandler());
         server.createContext("/updateBalance", new UpdateBalanceHandler());
+        server.createContext("/getBalance", new GetBalanceHandler());
         DataSourceHelper.createDb();
         server.start();
     }
