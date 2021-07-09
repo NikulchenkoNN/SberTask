@@ -1,10 +1,7 @@
 package ru.task.bankAPI.test;
 
 import org.h2.tools.Server;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import ru.task.bankAPI.connection.DataSourceHelper;
 import ru.task.bankAPI.dao.CardDao;
 import ru.task.bankAPI.dao.CardDaoImpl;
@@ -40,24 +37,23 @@ public class DaoTest {
         cardDao = new CardDaoImpl();
     }
 
-    @AfterAll
-    public static void closeDb() throws SQLException {
-        DataSourceHelper.closeConnection();
-    }
-
     @Test
     public void getUser() {
         User actual = userDao.findUserByName("Alex");
+
         User expected = new User();
         expected.setId(1L);
         expected.setName("Alex");
+
         Card card = new Card();
         card.setId(1L);
         card.setNumber(num1);
         card.setBalance(BigDecimal.valueOf(15.00));
         card.setUser(expected);
+
         List<Card> cards = new ArrayList<>();
         cards.add(card);
+
         expected.setCards(cards);
         Assertions.assertEquals(expected, actual);
     }
@@ -65,9 +61,11 @@ public class DaoTest {
     @Test
     public void findUser(){
         User actual = userDao.findUserById(1L);
+
         User expected = new User();
         expected.setId(1L);
         expected.setName("Alex");
+
         Card card = new Card();
         card.setId(1L);
         card.setNumber(num1);
@@ -75,6 +73,7 @@ public class DaoTest {
         card.setUser(expected);
         List<Card> cards = new ArrayList<>();
         cards.add(card);
+
         expected.setCards(cards);
 
         Assertions.assertEquals(expected, actual);

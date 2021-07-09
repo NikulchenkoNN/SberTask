@@ -4,7 +4,6 @@ package ru.task.testtask.services.loader;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.util.Assert;
 import ru.task.testtask.model.City;
 import ru.task.testtask.services.comparator.CompareByName;
 import ru.task.testtask.services.comparator.CompareByRegion;
@@ -27,12 +26,6 @@ public class CatalogueTest {
     public void whenLoadFromFileSizeCorrect() throws FileNotFoundException {
         Assertions.assertEquals(8, CatalogueLoader.readFromFileToList().size());
     }
-
-    @Test
-    public void fileNotFound() {
-
-    }
-
 
     @Test
     public void listAfterSortByNameNotEqualsListBerfore() {

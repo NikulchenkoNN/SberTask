@@ -1,7 +1,6 @@
 package ru.task.bankAPI.test;
 
 import org.h2.tools.Server;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -25,11 +24,6 @@ public class ServicesTest {
     public static void createDao() throws SQLException {
         DataSourceHelper.createDb();
         Server.createTcpServer().start();
-    }
-
-    @AfterAll
-    public static void closeCon() throws SQLException {
-        DataSourceHelper.closeConnection();
     }
 
     @Test

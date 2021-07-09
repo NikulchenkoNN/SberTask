@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class DataSourceHelper {
-    private static Connection connection;
 
     public static Connection connection() throws SQLException {
         try {
@@ -14,7 +13,7 @@ public class DataSourceHelper {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        connection = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/test", "sa", "");
+        Connection connection = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/test", "sa", "");
         connection.setAutoCommit(true);
         return connection;
     }
@@ -57,7 +56,4 @@ public class DataSourceHelper {
         }
     }
 
-    public static void closeConnection() throws SQLException {
-        connection.close();
-    }
 }
