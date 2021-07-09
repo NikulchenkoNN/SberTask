@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class DtoImpl implements Dto {
+public class ConverterImpl implements Converter {
     private static final ObjectMapper mapper = new ObjectMapper();
 
     public String objectToJSON(Object obj) throws IOException {

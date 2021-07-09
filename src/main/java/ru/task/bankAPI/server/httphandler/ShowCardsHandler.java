@@ -2,8 +2,8 @@ package ru.task.bankAPI.server.httphandler;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import ru.task.bankAPI.services.dto.Dto;
-import ru.task.bankAPI.services.dto.DtoImpl;
+import ru.task.bankAPI.services.dto.Converter;
+import ru.task.bankAPI.services.dto.ConverterImpl;
 import ru.task.bankAPI.model.Card;
 import ru.task.bankAPI.model.User;
 import ru.task.bankAPI.services.CardService;
@@ -15,17 +15,17 @@ import java.nio.charset.StandardCharsets;
 import java.util.Set;
 
 public class ShowCardsHandler implements HttpHandler {
-    Dto dto = new DtoImpl();
+    Converter converter = new ConverterImpl();
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         String response;
-        User user = (User) dto.jsonToObject(exchange.getRequestBody(), User.class);
+        User user = (User) converter.jsonToObject(exchange.getRequestBody(), User.class);
         user = UserService.findUserByName(user.getName());
         if (user != null) {
             Set<Card> cardsByUser = CardService.getCardsByUser(user.getId());
             if (!cardsByUser.isEmpty()) {
-                response = dto.objectToJSON(cardsByUser);
+                response = converter.objectToJSON(cardsByUser);
             } else {
                 response = "User " + user.getName() +" has no cards";
             }

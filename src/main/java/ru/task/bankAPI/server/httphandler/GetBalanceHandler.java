@@ -2,8 +2,8 @@ package ru.task.bankAPI.server.httphandler;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import ru.task.bankAPI.services.dto.Dto;
-import ru.task.bankAPI.services.dto.DtoImpl;
+import ru.task.bankAPI.services.dto.Converter;
+import ru.task.bankAPI.services.dto.ConverterImpl;
 import ru.task.bankAPI.services.dto.UpdateBalanceDto;
 import ru.task.bankAPI.model.User;
 import ru.task.bankAPI.services.CardService;
@@ -15,13 +15,13 @@ import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 
 public class GetBalanceHandler implements HttpHandler {
-    Dto dto = new DtoImpl();
+    Converter converter = new ConverterImpl();
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         String response;
 
-        UpdateBalanceDto o = (UpdateBalanceDto) dto.jsonToObject(exchange.getRequestBody(), UpdateBalanceDto.class);
+        UpdateBalanceDto o = (UpdateBalanceDto) converter.jsonToObject(exchange.getRequestBody(), UpdateBalanceDto.class);
         String userName = o.getName();
         User user = UserService.findUserByName(userName);
 
@@ -29,7 +29,7 @@ public class GetBalanceHandler implements HttpHandler {
             Long userId = user.getId();
             Long cardId = o.getCardId();
             BigDecimal balance = CardService.getBalance(userId, cardId);
-            response = "Balance of card " + CardService.findCardByUserId(userId).getNumber() + " of user "+ userName+ " " + dto.objectToJSON(balance);
+            response = "Balance of card " + CardService.findCardByUserId(userId).getNumber() + " of user "+ userName+ " " + converter.objectToJSON(balance);
         } else {
             response = "User " + userName + " don't have such card";
         }

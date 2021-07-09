@@ -19,7 +19,6 @@ public class UserDaoImpl implements UserDao {
                 .prepareStatement("insert into user (name) values (?)", Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, user.getName());
             statement.executeUpdate();
-
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     user.setId(generatedKeys.getLong(1));
@@ -37,7 +36,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User findUserById(Long userId) {
         try (PreparedStatement statement = DataSourceHelper.connection()
-                .prepareStatement("select * from user u where u.ID= ?")) {
+                .prepareStatement("select * from USER left join CARD C on USER.ID = C.BANK_USER_ID where USER.ID = ?")) {
             statement.setLong(1, userId);
             statement.execute();
             ResultSet resultSet = statement.getResultSet();

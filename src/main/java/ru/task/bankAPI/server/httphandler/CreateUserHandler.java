@@ -2,8 +2,8 @@ package ru.task.bankAPI.server.httphandler;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import ru.task.bankAPI.services.dto.Dto;
-import ru.task.bankAPI.services.dto.DtoImpl;
+import ru.task.bankAPI.services.dto.Converter;
+import ru.task.bankAPI.services.dto.ConverterImpl;
 import ru.task.bankAPI.model.User;
 import ru.task.bankAPI.services.UserService;
 
@@ -12,15 +12,15 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
 public class CreateUserHandler implements HttpHandler {
-    Dto dto = new DtoImpl();
+    Converter converter = new ConverterImpl();
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        User user = (User) dto.jsonToObject(exchange.getRequestBody(), User.class);
+        User user = (User) converter.jsonToObject(exchange.getRequestBody(), User.class);
         user = UserService.createUser(user.getName());
         String response;
         if (user.getId() != null) {
-            response = dto.objectToJSON(user);
+            response = converter.objectToJSON(user);
         } else {
             response = "User with name " + user.getName() + " already exits";
         }

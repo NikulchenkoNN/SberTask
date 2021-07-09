@@ -1,0 +1,77 @@
+POST http://localhost:8080/getBalance
+Content-Type: application/json
+
+{
+  "name": "Dim",
+  "cardId": "1"
+}
+
+###
+POST http://localhost:8080/showCards
+Content-Type: application/json
+
+{
+  "name": "Dim"
+}
+
+###
+
+
+###
+POST http://localhost:8080/updateBalance
+Content-Type: application/json
+
+{
+  "name": "Dim",
+  "cardId": "1",
+  "cash": "15"
+}
+
+###
+POST http://localhost:8080/newCard
+Content-Type: application/json
+
+{
+  "name": "Dim"
+}
+
+###
+POST http://localhost:8080/newCard
+Content-Type: application/json
+
+{
+  "name": "Dim"
+}
+
+###
+POST http://localhost:8080/newUser
+Content-Type: application/json
+
+{
+  "name": "Alex"
+}
+
+###
+POST http://localhost:8080/newUser
+Content-Type: application/json
+
+{
+  "name": "Dim"
+}
+
+###
+POST http://localhost:8080/newUser
+Content-Type: application/json
+
+{
+  "name": "Alex"
+}
+
+
+###
+POST http://localhost:8080/newUser
+Content-Type: application/json
+
+{
+  "name": "Nick"
+}
