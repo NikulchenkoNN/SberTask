@@ -13,11 +13,16 @@ import java.util.Set;
 
 public class CardDaoImpl implements CardDao {
     UserDao userDao = new UserDaoImpl();
+    private static final String CREATE_CARD = "insert into card (number) values (?)";
+    private static final String FIND_BY_USER_ID = "select * from card  where BANK_USER_ID = ?";
+    private static final String GET_CARDS_BY_USER_ID = "select * from card c where c.BANK_USER_ID = ?";
+    private static final String UPDATE_BALANCE = "update card set balance = ? where ID = ?";
+    private static final String GET_BALANCE = "select * from card where BANK_USER_ID = ? and ID = ?";
 
     @Override
     public Card createCard(Card card) {
         try (PreparedStatement statement = DataSourceHelper.connection()
-                .prepareStatement("insert into card (number) values (?)", Statement.RETURN_GENERATED_KEYS)) {
+                .prepareStatement(CREATE_CARD, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, card.getNumber());
             statement.executeUpdate();
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
@@ -37,7 +42,7 @@ public class CardDaoImpl implements CardDao {
     @Override
     public Card findCardByUserId(Long userId) {
         try (PreparedStatement statement = DataSourceHelper.connection()
-                .prepareStatement("select * from card  where BANK_USER_ID = ?")) {
+                .prepareStatement(FIND_BY_USER_ID)) {
             statement.setLong(1, userId);
             statement.execute();
             ResultSet resultSet = statement.getResultSet();
@@ -52,7 +57,7 @@ public class CardDaoImpl implements CardDao {
     @Override
     public Set<Card> getCardsByUser(Long userId) {
         try (PreparedStatement statement = DataSourceHelper.connection()
-                .prepareStatement("select * from card c where c.BANK_USER_ID = ?")) {
+                .prepareStatement(GET_CARDS_BY_USER_ID)) {
             statement.setLong(1, userId);
             statement.execute();
             ResultSet resultSet = statement.getResultSet();
@@ -72,7 +77,7 @@ public class CardDaoImpl implements CardDao {
         BigDecimal oldBalance = getCardBalance(userId, cardId);
         BigDecimal newBalance = oldBalance.add(cash);
         try (PreparedStatement statement = DataSourceHelper.connection()
-                .prepareStatement("update card set balance = ? where ID = ?")) {
+                .prepareStatement(UPDATE_BALANCE)) {
             statement.setBigDecimal(1, newBalance);
             statement.setLong(2, cardId);
             statement.execute();
@@ -84,7 +89,7 @@ public class CardDaoImpl implements CardDao {
     @Override
     public BigDecimal getCardBalance(Long userId, Long cardId) {
         try (PreparedStatement statement = DataSourceHelper.connection()
-                .prepareStatement("select * from card where BANK_USER_ID = ? and ID = ?")) {
+                .prepareStatement(GET_BALANCE)) {
             statement.setLong(1, userId);
             statement.setLong(2, cardId);
             statement.execute();

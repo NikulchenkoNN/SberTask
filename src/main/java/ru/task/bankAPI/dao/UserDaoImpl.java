@@ -13,10 +13,15 @@ import java.util.*;
 
 public class UserDaoImpl implements UserDao {
 
+    private static final String CREATE_USER = "insert into user (name) values (?)";
+    private static final String FIND_BY_ID = "select * from USER left join CARD C on USER.ID = C.BANK_USER_ID where USER.ID = ?";
+    private static final String FIND_BY_NAME = "select * from USER left join CARD C on USER.ID = C.BANK_USER_ID where NAME = ?";
+    private static final String GET_USERS = "select * from user u left join CARD c on u.ID=c.BANK_USER_ID";
+
     @Override
     public User createUser(User user) {
         try (PreparedStatement statement = DataSourceHelper.connection()
-                .prepareStatement("insert into user (name) values (?)", Statement.RETURN_GENERATED_KEYS)) {
+                .prepareStatement(CREATE_USER, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, user.getName());
             statement.executeUpdate();
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
@@ -36,7 +41,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User findUserById(Long userId) {
         try (PreparedStatement statement = DataSourceHelper.connection()
-                .prepareStatement("select * from USER left join CARD C on USER.ID = C.BANK_USER_ID where USER.ID = ?")) {
+                .prepareStatement(FIND_BY_ID)) {
             statement.setLong(1, userId);
             statement.execute();
             ResultSet resultSet = statement.getResultSet();
@@ -51,7 +56,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User findUserByName(String userName) {
         try (PreparedStatement statement = DataSourceHelper.connection()
-                .prepareStatement("select * from USER left join CARD C on USER.ID = C.BANK_USER_ID where NAME = ?")) {
+                .prepareStatement(FIND_BY_NAME)) {
             statement.setString(1, userName);
             statement.execute();
             ResultSet resultSet = statement.getResultSet();
@@ -66,7 +71,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public Set<User> getUsers() {
         try (PreparedStatement statement = DataSourceHelper.connection()
-                .prepareStatement("select * from user u left join CARD c on u.ID=c.BANK_USER_ID")) {
+                .prepareStatement(GET_USERS)) {
             statement.execute();
             ResultSet resultSet = statement.getResultSet();
             Set<User> users = new HashSet<>();
