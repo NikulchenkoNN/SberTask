@@ -30,7 +30,7 @@ public class CardDaoImpl implements CardDao {
             return card;
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException("Create card failure");
+            throw new RuntimeException();
         }
     }
 
@@ -44,8 +44,9 @@ public class CardDaoImpl implements CardDao {
             resultSet.next();
             return resultSetForCard(resultSet);
         } catch (SQLException e) {
-            throw new RuntimeException("find dy card number");
+            e.printStackTrace();
         }
+        return null;
     }
 
     @Override
@@ -62,8 +63,8 @@ public class CardDaoImpl implements CardDao {
             return cards;
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException();
         }
+        return null;
     }
 
     @Override
@@ -77,7 +78,6 @@ public class CardDaoImpl implements CardDao {
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException();
         }
     }
 
@@ -92,8 +92,9 @@ public class CardDaoImpl implements CardDao {
             resultSet.next();
             return resultSet.getBigDecimal("BALANCE");
         } catch (SQLException e) {
-            throw new RuntimeException();
+            e.printStackTrace();
         }
+        return null;
     }
 
     private Card resultSetForCard(ResultSet resultSet) throws SQLException {

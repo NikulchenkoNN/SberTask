@@ -89,6 +89,7 @@ public class UserDaoImpl implements UserDao {
             user.setId(resultSet.getLong("ID"));
             user.setName(resultSet.getString("NAME"));
         } catch (SQLException e) {
+            e.printStackTrace();
             return null;
         }
         try {

@@ -16,12 +16,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.Set;
 
 public class CreateCardHandler implements HttpHandler {
-    ConverterImpl dto = new ConverterImpl();
+    ConverterImpl converter = new ConverterImpl();
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         String response;
-        User user = (User) dto.jsonToObject(exchange.getRequestBody(), User.class);
+        User user = (User) converter.jsonToObject(exchange.getRequestBody(), User.class);
         String userName = user.getName();
         CardNumber.getInstance();
         String cardNumber = CardNumber.createNumber();
@@ -33,7 +33,7 @@ public class CreateCardHandler implements HttpHandler {
             UserCardService.addCardToUser(userId, cardNumber);
             Set<Card> cards = CardService.getCardsByUser(userId);
 
-            response = "User " + user.getName() + "have this cards\n" + dto.objectToJSON(cards);
+            response = "User " + user.getName() + "have this cards\n" + converter.objectToJSON(cards);
         } else {
             response = "User with name " + userName + " not exist";
         }
