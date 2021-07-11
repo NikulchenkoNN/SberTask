@@ -12,13 +12,19 @@ import java.sql.SQLException;
 
 public class DataSourceHelper {
 
+    private static final String DRIVER = "org.h2.Driver";
+    private static final String DB_URL = "jdbc:h2:mem:default";
+    private static final String DB_USER = "sa";
+    private static final String DB_PASS = "";
+    private static final String DB_PROP = "/database.sql";
+
     public static Connection connection() throws SQLException {
         try {
             Class.forName("org.h2.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        Connection connection = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/test", "sa", "");
+        Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
         connection.setAutoCommit(true);
         return connection;
     }
@@ -48,7 +54,7 @@ public class DataSourceHelper {
         String sql;
             try {
                 sql = FileUtils.readFileToString(new File(
-                                DataSourceHelper.class.getResource("/database.sql").getFile()),
+                                DataSourceHelper.class.getResource(DB_PROP).getFile()),
                         Charset.defaultCharset() );
             } catch (IOException e) {
                 e.printStackTrace();

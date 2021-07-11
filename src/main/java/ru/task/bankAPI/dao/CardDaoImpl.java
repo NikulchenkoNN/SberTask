@@ -107,9 +107,10 @@ public class CardDaoImpl implements CardDao {
         card.setId(resultSet.getLong("ID"));
         card.setNumber(resultSet.getString("NUMBER"));
         card.setBalance(resultSet.getBigDecimal("BALANCE"));
-        Long userId = (Long) resultSet.getObject("BANK_USER_ID");
+        Object userId = resultSet.getObject("BANK_USER_ID");
         if (userId != null) {
-            card.setUser(userDao.findUserById(userId));
+            Long id = Long.parseLong(userId.toString());
+            card.setUser(userDao.findUserById(id));
         }
         return card;
     }

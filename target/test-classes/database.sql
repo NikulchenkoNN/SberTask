@@ -1,6 +1,6 @@
 set schema public;
 
-alter table USER drop column id;
+alter table if exists USER drop column id;
 drop table IF EXISTS USER;
 drop table IF EXISTS CARD;
 

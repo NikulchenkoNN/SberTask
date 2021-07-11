@@ -37,6 +37,13 @@ public class DaoTest {
         cardDao = new CardDaoImpl();
     }
 
+//    @BeforeEach
+//    public void clearDb() throws SQLException {
+//        Statement statement = DataSourceHelper.connection().createStatement();
+//        statement.execute("truncate table card");
+//        statement.execute("truncate table user");
+//    }
+
     @Test
     public void getUser() {
         User actual = userDao.findUserByName("Alex");

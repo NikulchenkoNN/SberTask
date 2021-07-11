@@ -20,19 +20,23 @@ public class ShowCardsHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         String response;
+        int code;
         User user = (User) converter.jsonToObject(exchange.getRequestBody(), User.class);
         user = UserService.findUserByName(user.getName());
         if (user != null) {
             Set<Card> cardsByUser = CardService.getCardsByUser(user.getId());
             if (!cardsByUser.isEmpty()) {
                 response = converter.objectToJSON(cardsByUser);
+                code = 200;
             } else {
                 response = "User " + user.getName() +" has no cards";
+                code = 406;
             }
         } else {
             response = "No such user to show cards";
+            code = 406;
         }
-        exchange.sendResponseHeaders(200, response.length());
+        exchange.sendResponseHeaders(code, response.length());
         OutputStream os = exchange.getResponseBody();
         os.write(response.getBytes(StandardCharsets.UTF_8));
         os.close();

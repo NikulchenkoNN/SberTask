@@ -9,10 +9,11 @@ import java.net.InetSocketAddress;
 
 public class MyServer {
     static HttpServer server;
+private static final int PORT = 8080;
 
     static {
         try {
-            server = HttpServer.create(new InetSocketAddress(8080), 0);
+            server = HttpServer.create(new InetSocketAddress(PORT), 0);
         } catch (IOException e) {
             e.printStackTrace();
         }
