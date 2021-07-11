@@ -18,7 +18,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Set;
 
-public class ServicesTest {
+public class ServiceTest {
     private static final CardNumber cardNumber = CardNumber.getInstance();
     private static Service service = new ServiceImpl();
 
@@ -128,15 +128,42 @@ public class ServicesTest {
     public void updateBalanceTest() {
         String card1Number = CardNumber.createNumber();
 
-        User user1 = service.createUser("Vlad");
+        User user = service.createUser("Vlad");
 
         service.createCard(card1Number);
 
-        service.addCardToUser(user1.getId(), card1Number);
+        service.addCardToUser(user.getId(), card1Number);
 
-        BigDecimal beforeUpdate = service.getBalance(user1.getId(), service.findCardByUserId(user1.getId()).getId());
-        service.updateBalance(user1.getId(), service.findCardByUserId(user1.getId()).getId(), BigDecimal.valueOf(12.5));
-        BigDecimal afterUpdate = service.getBalance(user1.getId(), service.findCardByUserId(user1.getId()).getId());
+        BigDecimal beforeUpdate = service.getBalance(user.getId(), service.findCardByUserId(user.getId()).getId());
+        service.updateBalance(user.getId(), service.findCardByUserId(user.getId()).getId(), BigDecimal.valueOf(12.5));
+        BigDecimal afterUpdate = service.getBalance(user.getId(), service.findCardByUserId(user.getId()).getId());
         Assertions.assertNotEquals(beforeUpdate, afterUpdate);
+    }
+
+    @Test
+    public void Test() {
+        User user1 = service.createUser("Alex");
+        User user2 = service.createUser("Alex");
+        Assertions.assertEquals(1, service.getAllUsers().size());
+        User user3 = service.createUser("Mike");
+
+        String num1 = CardNumber.createNumber();
+        service.createCard(num1);
+
+        String num2 = CardNumber.createNumber();
+        service.createCard(num2);
+
+//        String num3 = CardNumber.createNumber();
+//        service.createCard(num3);
+//
+//        String num4 = CardNumber.createNumber();
+//        service.createCard(num3);
+
+        service.addCardToUser(user1.getId(), num1);
+        service.addCardToUser(user2.getId(), num2);
+//        service.addCardToUser(user3.getId(), num3);
+//        service.addCardToUser(user3.getId(), num4);
+
+
     }
 }

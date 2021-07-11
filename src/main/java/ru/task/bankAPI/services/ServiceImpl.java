@@ -54,6 +54,11 @@ public class ServiceImpl implements Service {
     }
 
     @Override
+    public Set<User> getAllUsers() {
+        return userDao.getUsers();
+    }
+
+    @Override
     public void updateBalance(Long userId, Long cardId, BigDecimal cash) {
         cardDao.updateCardBalance(userId, cardId, cash);
     }

@@ -27,7 +27,12 @@ public class CardDaoImpl implements CardDao {
             statement.executeUpdate();
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    card.setId(generatedKeys.getLong(1));
+                    Object id = generatedKeys.getObject("ID");
+                    if (id != null) {
+                        card.setId(Long.parseLong(id.toString()));
+                    } else {
+                        return null;
+                    }
                 } else {
                     throw new SQLException("Creating card failed, no ID obtained.");
                 }
