@@ -13,11 +13,23 @@ import java.util.Set;
 
 public class CardDaoImpl implements CardDao {
     UserDao userDao = new UserDaoImpl();
-    private static final String CREATE_CARD = "insert into card (number) values (?)";
-    private static final String FIND_BY_USER_ID = "select * from card  where BANK_USER_ID = ?";
-    private static final String GET_CARDS_BY_USER_ID = "select * from card c where c.BANK_USER_ID = ?";
-    private static final String UPDATE_BALANCE = "update card set balance = ? where ID = ?";
-    private static final String GET_BALANCE = "select * from card where BANK_USER_ID = ? and ID = ?";
+    private static final String CREATE_CARD = "insert into CARD (number) values (?)";
+    private static final String FIND_BY_USER_ID = "select * from CARD  where BANK_USER_ID = ?";
+    private static final String GET_CARDS_BY_USER_ID = "select * from CARD c where c.BANK_USER_ID = ?";
+    private static final String UPDATE_BALANCE = "update CARD set balance = ? where ID = ?";
+    private static final String GET_BALANCE = "select * from CARD where BANK_USER_ID = ? and ID = ?";
+    private static final String ADD_CARD_TO_USER = "update CARD set BANK_USER_ID = ? where NUMBER = ?";
+
+    @Override
+    public void addCardToUser(Long userId, String cardNumber) {
+        try (PreparedStatement statement = DataSourceHelper.connection()
+                .prepareStatement(ADD_CARD_TO_USER)) {
+            statement.setLong(1, userId);
+            statement.setString(2, cardNumber);
+            statement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }    }
 
     @Override
     public Card createCard(Card card) {

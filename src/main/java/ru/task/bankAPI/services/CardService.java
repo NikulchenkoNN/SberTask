@@ -1,34 +1,15 @@
 package ru.task.bankAPI.services;
 
-import ru.task.bankAPI.dao.CardDao;
-import ru.task.bankAPI.dao.CardDaoImpl;
 import ru.task.bankAPI.model.Card;
 
 import java.math.BigDecimal;
 import java.util.Set;
 
-public class CardService {
-    static CardDao cardDao = new CardDaoImpl();
-
-    public static void createCard(String number) {
-        Card card = new Card();
-        card.setNumber(number);
-        cardDao.createCard(card);
-    }
-
-    public static Set<Card> getCardsByUser(Long userId) {
-        return cardDao.getCardsByUser(userId);
-    }
-
-    public static void updateBalance(Long userId, Long cardId, BigDecimal cash) {
-        cardDao.updateCardBalance(userId, cardId, cash);
-    }
-
-    public static BigDecimal getBalance(Long userId, Long cardId) {
-        return cardDao.getCardBalance(userId, cardId);
-    }
-
-    public static Card findCardByUserId(Long userId) {
-        return cardDao.findCardByUserId(userId);
-    }
+public interface CardService {
+    void addCardToUser(Long userId, String cardNumber);
+    void createCard(String number);
+    Set<Card> getCardsByUser(Long userId);
+    void updateBalance(Long userId, Long cardId, BigDecimal cash);
+    BigDecimal getBalance(Long userId, Long cardId);
+    Card findCardByUserId(Long userId);
 }

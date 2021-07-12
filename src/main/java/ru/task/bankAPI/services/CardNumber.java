@@ -1,16 +1,13 @@
 package ru.task.bankAPI.services;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class CardNumber {
     private static CardNumber cardNumber;
     protected static Set<String> cards;
 
     private CardNumber() {
-        cards = new LinkedHashSet<>();
+        cards = new HashSet<>();
     }
 
     public static CardNumber getInstance() {

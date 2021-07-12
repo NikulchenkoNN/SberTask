@@ -1,24 +1,12 @@
 package ru.task.bankAPI.services;
 
-import ru.task.bankAPI.dao.UserDao;
-import ru.task.bankAPI.dao.UserDaoImpl;
 import ru.task.bankAPI.model.User;
 
-public class UserService {
-    static UserDao userDao = new UserDaoImpl();
+import java.util.Set;
 
-    public static User createUser(String name) {
-        User user = new User();
-        user.setName(name);
-        user = userDao.createUser(user);
-        return user;
-    }
-
-    public static User findUserByName(String userName) {
-        return userDao.findUserByName(userName);
-    }
-
-    public static User findUserById(Long userId) {
-        return userDao.findUserById(userId);
-    }
+public interface UserService {
+    User createUser(String name);
+    User findUserByName(String userName);
+    User findUserById(Long userId);
+    Set<User> getAllUsers();
 }

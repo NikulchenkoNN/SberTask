@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.util.Set;
 
 public interface CardDao {
+    void addCardToUser(Long userId, String cardNumber);
     Card createCard(Card card);
     Card findCardByUserId(Long cardId);
     Set<Card> getCardsByUser(Long userId);

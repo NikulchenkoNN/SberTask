@@ -2,20 +2,18 @@ package ru.task.bankAPI.server.httphandler;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import ru.task.bankAPI.services.Service;
-import ru.task.bankAPI.services.ServiceImpl;
+import ru.task.bankAPI.services.*;
 import ru.task.bankAPI.services.dto.Converter;
 import ru.task.bankAPI.services.dto.ConverterImpl;
 import ru.task.bankAPI.model.User;
-import ru.task.bankAPI.services.UserService;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
 public class CreateUserHandler implements HttpHandler {
-    Converter converter = new ConverterImpl();
-    Service service = new ServiceImpl();
+    private Converter converter = new ConverterImpl();
+    private UserServiceImpl userService = UserServiceImpl.getInstance();
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
@@ -23,7 +21,7 @@ public class CreateUserHandler implements HttpHandler {
         int code;
 
         User user = (User) converter.jsonToObject(exchange.getRequestBody(), User.class);
-        user = service.createUser(user.getName());
+        user = userService.createUser(user.getName());
 
         if (user.getId() != null) {
             response = converter.objectToJSON(user);

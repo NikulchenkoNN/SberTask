@@ -5,7 +5,8 @@ import com.sun.net.httpserver.HttpHandler;
 import ru.task.bankAPI.model.Card;
 import ru.task.bankAPI.model.User;
 import ru.task.bankAPI.services.CardService;
-import ru.task.bankAPI.services.UserService;
+import ru.task.bankAPI.services.CardServiceImpl;
+import ru.task.bankAPI.services.UserServiceImpl;
 import ru.task.bankAPI.services.dto.Converter;
 import ru.task.bankAPI.services.dto.ConverterImpl;
 import ru.task.bankAPI.services.dto.UpdateBalanceDto;
@@ -16,7 +17,9 @@ import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 
 public class UpdateBalanceHandler implements HttpHandler {
-    Converter converter = new ConverterImpl();
+    private Converter converter = new ConverterImpl();
+    private CardService cardService = CardServiceImpl.getInstance();
+    private UserServiceImpl userService = UserServiceImpl.getInstance();
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
@@ -25,14 +28,14 @@ public class UpdateBalanceHandler implements HttpHandler {
 
         UpdateBalanceDto o = (UpdateBalanceDto) converter.jsonToObject(exchange.getRequestBody(), UpdateBalanceDto.class);
         String userName = o.getName();
-        User user = UserService.findUserByName(userName);
+        User user = userService.findUserByName(userName);
 
         if (user != null) {
             Long userId = user.getId();
             Long cardId = o.getCardId();
             BigDecimal cash = o.getCash();
-            CardService.updateBalance(userId, cardId, cash);
-            Card card = CardService.findCardByUserId(userId);
+            cardService.updateBalance(userId, cardId, cash);
+            Card card = cardService.findCardByUserId(userId);
             if (card != null) {
                 response = "Card " + converter.objectToJSON(card) + " balance updated";
                 code = 200;
